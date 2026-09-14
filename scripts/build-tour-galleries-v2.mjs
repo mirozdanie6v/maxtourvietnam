@@ -55,6 +55,27 @@ function extractImages(html) {
   return urls;
 }
 
+function galleryScope(html) {
+  // On the source pages the actual tour photo carousel is between the
+  // "Особенности тура" content and the booking messenger/form block.
+  // Scoping here prevents footer, social, review and other page media from
+  // being mixed into the tour gallery.
+  const lower = html.toLowerCase();
+  let start = lower.indexOf('особенности тура');
+  if (start < 0) start = lower.indexOf('что взять с собой');
+  if (start < 0) start = 0;
+
+  const candidates = [
+    lower.indexOf('отправить в whatsapp', start),
+    lower.indexOf('tour_date', start),
+    lower.indexOf('желаемая дата', start),
+  ].filter((index) => index > start);
+  const end = candidates.length ? Math.min(...candidates) : html.length;
+  const scoped = html.slice(start, end);
+  const scopedImages = extractImages(scoped);
+  return scopedImages.length >= 3 ? scopedImages : extractImages(html);
+}
+
 function extension(url) {
   const ext = extname(new URL(url).pathname).toLowerCase();
   return ext === '.jpeg' ? '.jpg' : ext || '.jpg';
@@ -86,7 +107,7 @@ for (const [tourIndex, tour] of tours.entries()) {
     continue;
   }
 
-  const images = extractImages(html);
+  const images = galleryScope(html);
   const localImages = [];
   const dir = `public/tour-galleries/${tour.slug}`;
   await mkdir(dir, { recursive: true });
@@ -99,7 +120,7 @@ for (const [tourIndex, tour] of tours.entries()) {
   }
 
   galleries[tour.slug] = localImages;
-  console.log(`[gallery ${tourIndex + 1}/${tours.length}] ${tour.slug}: ${localImages.length} local images`);
+  console.log(`[gallery ${tourIndex + 1}/${tours.length}] ${tour.slug}: ${localImages.length} scoped local images`);
   await sleep(450);
 }
 
@@ -107,7 +128,7 @@ const json = JSON.stringify(galleries, null, 2);
 await writeFile('public/tour-galleries.json', `${json}\n`, 'utf8');
 await writeFile(
   'src/client/generatedGalleries.ts',
-  `// Generated from public MAX TOUR pages during build. All URLs below are local deployment assets.\nexport const generatedGalleries: Record<string, string[]> = ${json};\n`,
+  `// Generated from the source tour gallery block during build. All URLs below are local deployment assets.\nexport const generatedGalleries: Record<string, string[]> = ${json};\n`,
   'utf8',
 );
-console.log(`Built local galleries for ${tours.length} tours.`);
+console.log(`Built scoped local galleries for ${tours.length} tours.`);
