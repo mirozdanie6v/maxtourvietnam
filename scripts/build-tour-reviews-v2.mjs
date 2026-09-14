@@ -62,7 +62,7 @@ const isReviewText = (line) => line.length >= 45 && line.length <= 1400 && !/^ht
 
 function extractReviews(html) {
   const lines = visibleLines(html);
-  const headingIndex = lines.findLastIndex((line) => /^отзывы\b/i.test(line));
+  const headingIndex = lines.findLastIndex((line) => /^отзывы(?:\s|$)/iu.test(line));
   if (headingIndex < 0) return [];
 
   let chooserIndex = -1;
