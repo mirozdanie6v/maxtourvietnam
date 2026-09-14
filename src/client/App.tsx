@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useMemo, useState } from 'react';
 import { Link, Route, Routes, useLocation, useParams } from 'react-router-dom';
 import { brand, heroSlides, sidebarLinks, tours } from './data';
+import { tourDetails } from './tourDetails';
 
 type SocialKind = 'whatsapp' | 'telegram' | 'instagram' | 'max' | 'vk';
 
@@ -236,9 +237,7 @@ function FAQ() {
     ['Возможны ли дополнительные расходы?', 'Все обязательные расходы по программе проговариваются заранее. Дополнительные личные расходы остаются на усмотрение туриста.'],
     ['MAX TOUR - официальная компания?', 'MAX TOUR работает во Вьетнаме как экскурсионное бюро и организует групповые и индивидуальные программы для туристов.'],
   ];
-  return (
-    <section className="section faq-section"><div className="container faq-container"><h2 className="live-heading">Часто задаваемые вопросы:</h2><div className="faq-list">{questions.map(([question, answer]) => <details key={question}><summary>{question}<span>＋</span></summary><p>{answer}</p></details>)}</div></div></section>
-  );
+  return <section className="section faq-section"><div className="container faq-container"><h2 className="live-heading">Часто задаваемые вопросы:</h2><div className="faq-list">{questions.map(([question, answer]) => <details key={question}><summary>{question}<span>＋</span></summary><p>{answer}</p></details>)}</div></div></section>;
 }
 
 function HomePage() {
@@ -258,14 +257,74 @@ function CatalogPage({ premium = false }: { premium?: boolean }) {
   );
 }
 
+function PricePanel({ title, lines }: { title: string; lines: string[] }) {
+  if (!lines.length) return null;
+  return <div className="source-price-panel"><h3>{title}</h3>{lines.map((line) => <p key={line}>{line}</p>)}</div>;
+}
+
 function TourPage() {
   const { slug } = useParams();
   const tour = tours.find((item) => item.slug === slug);
   if (!tour) return <NotFoundPage />;
+  const detail = tourDetails[tour.slug];
+  const groupPrices = detail?.groupPrices ?? [
+    `Взрослые — ${tour.adultPrice}$`,
+    ...(tour.childPrice !== undefined ? [`Дети — ${tour.childPrice}$`] : []),
+  ];
+  const locations = detail?.locations ?? [];
+  const schedule = detail?.schedule ?? [];
+  const included = detail?.included ?? [];
+  const bring = detail?.bring ?? [];
+
   return (
     <>
-      <section className="tour-detail-hero"><img src={tour.image} alt={tour.title} /><div className="tour-detail-overlay" /><div className="container tour-detail-title">{tour.badge && <span className={`tour-badge detail-badge badge-${tour.badge.replace(' ', '-')}`}>{tour.badge}</span>}<h1>{tour.title}</h1><div className="detail-price-line"><span>Взрослые - <strong>{tour.adultPrice}$</strong></span>{tour.childPrice !== undefined && <span>Дети - <strong>{tour.childPrice}$</strong></span>}</div><a className="button button-primary" href="#booking">ЗАБРОНИРОВАТЬ</a></div></section>
-      <section className="section"><div className="container detail-grid"><article className="detail-copy"><h2>{tour.title}</h2><p className="lead">Экскурсии MAX TOUR во Вьетнаме. Маленькие группы, русские гиды, комфорт и честные цены.</p><div className="detail-photo"><img src={tour.image} alt={tour.title} /></div><h3>Локации которые вы посетите:</h3><div className="detail-features"><div><strong>Комфортный трансфер</strong><span>Сбор участников из отелей и возвращение после экскурсии.</span></div><div><strong>Русскоязычное сопровождение</strong><span>Программа и организационная поддержка MAX TOUR.</span></div><div><strong>Цена без сюрпризов</strong><span>Основные условия и стоимость подтверждаются до поездки.</span></div></div></article><div id="booking"><BookingForm compact tourTitle={tour.title} /></div></div></section>
+      <section className="source-tour-top">
+        <div className="container source-tour-topbar"><a className="button button-primary" href="#booking">ЗАБРОНИРОВАТЬ</a></div>
+        <div className="source-tour-cover"><img src={tour.image} alt={tour.title} /></div>
+      </section>
+
+      <section className="source-tour-main section">
+        <div className="container source-tour-narrow">
+          <h1>{tour.title}</h1>
+          {tour.badge && <span className={`tour-badge source-detail-badge badge-${tour.badge.replace(' ', '-')}`}>{tour.badge}</span>}
+
+          <div className="source-tour-meta-head">
+            <h2>Локации которые вы посетите:</h2>
+            <div className="source-price-grid">
+              <PricePanel title="Цена групповой экскурсии:" lines={groupPrices} />
+              <PricePanel title="Цена индивидуальной экскурсии:" lines={detail?.privatePrices ?? []} />
+            </div>
+          </div>
+
+          {schedule.length > 0 && <div className="source-schedule">{schedule.map((item) => <div key={item}><span>●</span><strong>{item}</strong></div>)}</div>}
+          {detail?.notice && <div className="source-notice">{detail.notice}</div>}
+
+          {locations.length > 0 ? (
+            <div className="source-location-list">
+              {locations.map((location, index) => (
+                <article className="source-location" key={`${location.name}-${index}`}>
+                  <div className="source-location-number">{String(index + 1).padStart(2, '0')}</div>
+                  <div><h3>{location.name}</h3>{location.description && <p>{location.description}</p>}</div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className="source-pending-copy"><p>Для этой экскурсии программа переносится постранично из действующей версии MAX TOUR. Универсальный текст здесь больше не используется.</p></div>
+          )}
+
+          {(included.length > 0 || bring.length > 0) && <section className="source-features-section">
+            <h2>Особенности тура:</h2>
+            <div className="source-two-columns">
+              {included.length > 0 && <div><h3>Включено:</h3><ul>{included.map((item) => <li key={item}>{item}</li>)}</ul></div>}
+              {bring.length > 0 && <div><h3>Что взять с собой:</h3><ul>{bring.map((item) => <li key={item}>{item}</li>)}</ul></div>}
+            </div>
+          </section>}
+        </div>
+      </section>
+
+      <div id="booking"><BookingForm tourTitle={tour.title} /></div>
+      <FAQ />
+      {detail?.reviewTitle && <section className="section source-reviews"><div className="container source-tour-narrow"><h2>{detail.reviewTitle}</h2><div className="source-review-grid">{['★★★★★', '★★★★★', '★★★★★', '★★★★★'].map((stars, index) => <article key={index}><div className="source-review-avatar">{index + 1}</div><strong>{stars}</strong></article>)}</div></div></section>}
     </>
   );
 }
