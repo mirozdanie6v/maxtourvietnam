@@ -14,16 +14,17 @@
     "db:migrate:remote": "wrangler d1 migrations apply maxtourvietnam --remote"
   },
   "dependencies": {
-    "@vitejs/plugin-react": "latest",
-    "vite": "latest",
-    "typescript": "latest",
     "react": "latest",
     "react-dom": "latest",
     "react-router-dom": "latest"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "@vitejs/plugin-react": "latest",
+    "typescript": "latest",
+    "vite": "latest",
     "wrangler": "latest"
   }
 }
