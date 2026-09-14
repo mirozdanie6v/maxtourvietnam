@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run typecheck && vite build",
+    "sync:tours": "node scripts/sync-tour-content.mjs",
+    "build": "npm run sync:tours && npm run typecheck && vite build",
     "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.worker.json",
     "preview": "vite preview",
     "cf:dev": "wrangler dev",
@@ -25,6 +26,7 @@
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "@vitejs/plugin-react": "latest",
+    "cheerio": "latest",
     "typescript": "latest",
     "vite": "latest",
     "wrangler": "latest"
