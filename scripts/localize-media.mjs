@@ -1,15 +1,9 @@
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, stat, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
-import { extname } from 'node:path';
+import { extname, join } from 'node:path';
 
-const files = [
-  'index.html',
-  'src/client/data.ts',
-  'src/client/tourDetails.ts',
-  'src/client/styles.css',
-  'src/client/tour-pages.css',
-  'seed/tours.sql',
-];
+const roots = ['index.html', 'src/client', 'seed'];
+const allowedExtensions = new Set(['.html', '.ts', '.tsx', '.css', '.sql']);
 const outDir = 'public/mirror-media';
 const urlPattern = /https:\/\/(?:static|thb)\.tildacdn\.(?:one|net|com)\/[^'"\s)]+/g;
 
@@ -24,8 +18,36 @@ const extensionFor = (url, type = '') => {
   return '.jpg';
 };
 
+async function collectFiles(path) {
+  const info = await stat(path);
+  if (info.isFile()) return allowedExtensions.has(extname(path).toLowerCase()) ? [path] : [];
+  const entries = await readdir(path);
+  const nested = await Promise.all(entries.map((entry) => collectFiles(join(path, entry))));
+  return nested.flat();
+}
+
+async function fetchWithRetry(url, attempts = 3) {
+  let lastError;
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    try {
+      const response = await fetch(url, {
+        redirect: 'follow',
+        headers: { 'user-agent': 'Mozilla/5.0 MAX-TOUR-Media-Migration/1.0' },
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return response;
+    } catch (error) {
+      lastError = error;
+      if (attempt < attempts) await new Promise((resolve) => setTimeout(resolve, attempt * 1000));
+    }
+  }
+  throw new Error(`Failed to download ${url}: ${lastError?.message || lastError}`);
+}
+
 await mkdir(outDir, { recursive: true });
+const files = (await Promise.all(roots.map((root) => collectFiles(root)))).flat();
 const sources = new Map();
+
 for (const file of files) {
   const text = await readFile(file, 'utf8');
   for (const url of text.match(urlPattern) || []) sources.set(url, null);
@@ -34,8 +56,7 @@ for (const file of files) {
 let index = 0;
 for (const url of sources.keys()) {
   index += 1;
-  const response = await fetch(url, { redirect: 'follow', headers: { 'user-agent': 'Mozilla/5.0 MAX-TOUR-Media-Migration/1.0' } });
-  if (!response.ok) throw new Error(`Failed ${response.status} ${url}`);
+  const response = await fetchWithRetry(url);
   const type = response.headers.get('content-type') || '';
   const name = `${hash(url)}${extensionFor(url, type)}`;
   await writeFile(`${outDir}/${name}`, Buffer.from(await response.arrayBuffer()));
@@ -48,4 +69,12 @@ for (const file of files) {
   for (const [source, local] of sources) text = text.split(source).join(local);
   await writeFile(file, text, 'utf8');
 }
-console.log(`Localized ${sources.size} Tilda media assets into the deployment bundle and D1 seed.`);
+
+const remaining = [];
+for (const file of files) {
+  const text = await readFile(file, 'utf8');
+  if (text.match(urlPattern)) remaining.push(file);
+}
+if (remaining.length) throw new Error(`Unlocalized Tilda media remains in: ${remaining.join(', ')}`);
+
+console.log(`Localized ${sources.size} Tilda media assets across ${files.length} storefront source files.`);
