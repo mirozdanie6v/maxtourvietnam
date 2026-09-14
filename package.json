@@ -11,7 +11,9 @@
     "cf:dev": "wrangler dev",
     "cf:deploy": "npm run build && wrangler deploy",
     "db:migrate:local": "wrangler d1 migrations apply maxtourvietnam --local",
-    "db:migrate:remote": "wrangler d1 migrations apply maxtourvietnam --remote"
+    "db:migrate:remote": "wrangler d1 migrations apply maxtourvietnam --remote",
+    "db:seed:local": "wrangler d1 execute maxtourvietnam --local --file=seed/tours.sql",
+    "db:seed:remote": "wrangler d1 execute maxtourvietnam --remote --file=seed/tours.sql"
   },
   "dependencies": {
     "react": "latest",
