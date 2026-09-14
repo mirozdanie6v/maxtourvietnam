@@ -12,11 +12,37 @@ console.log(`status=${response.status} length=${html.length}`);
 for (const needle of ['Отзывы', 'Михаил', 'rec2343430183', '2343430183', '1779697604747']) {
   console.log(`${needle}: ${html.includes(needle)}`);
 }
-const probes = ['rec2343430183', 'Отзывы', 'Михаил'];
-for (const probe of probes) {
-  const i = html.indexOf(probe);
-  if (i >= 0) console.log(`AROUND ${probe}: ${html.slice(Math.max(0, i - 400), i + 1200).replace(/\s+/g, ' ')}`);
+
+const decode = (input) => input
+  .replace(/&#(\d+);/g, (_, value) => String.fromCodePoint(Number(value)))
+  .replace(/&#x([0-9a-f]+);/gi, (_, value) => String.fromCodePoint(parseInt(value, 16)))
+  .replaceAll('&nbsp;', ' ')
+  .replaceAll('&amp;', '&')
+  .replaceAll('&quot;', '"')
+  .replaceAll('&#39;', "'")
+  .replaceAll('&lt;', '<')
+  .replaceAll('&gt;', '>');
+
+function visibleLines(source) {
+  let text = source
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '')
+    .replace(/<svg\b[^>]*>[\s\S]*?<\/svg>/gi, '')
+    .replace(/<form\b[^>]*>[\s\S]*?<\/form>/gi, '')
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<\/(div|p|li|h1|h2|h3|h4|h5|h6|section|article|strong|b|span)>/gi, '\n')
+    .replace(/<[^>]+>/g, ' ');
+  text = decode(text);
+  return text.split(/\n+/).map((line) => line.replace(/\s+/g, ' ').trim()).filter(Boolean);
 }
-const escapedReview = html.match(/\\u041e\\u0442\\u0437\\u044b\\u0432[^"']*/i);
-console.log(`escaped-review-match=${Boolean(escapedReview)}`);
-if (escapedReview) console.log(escapedReview[0].slice(0, 500));
+
+const lines = visibleLines(html);
+console.log(`visible-lines=${lines.length}`);
+const reviewIndexes = lines.map((line, index) => ({ line, index })).filter(({ line }) => /отзывы/i.test(line));
+console.log(`review-markers=${JSON.stringify(reviewIndexes.slice(-5))}`);
+for (const marker of reviewIndexes.slice(-2)) {
+  console.log(`VISIBLE AROUND REVIEW index=${marker.index}:`);
+  for (const [offset, line] of lines.slice(Math.max(0, marker.index - 20), marker.index + 24).entries()) {
+    console.log(`${Math.max(0, marker.index - 20) + offset}: ${line}`);
+  }
+}
