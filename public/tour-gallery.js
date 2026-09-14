@@ -14,21 +14,24 @@
   async function renderGallery() {
     scheduled = false;
     const host = document.querySelector('.source-tour-main .source-tour-narrow');
-    document.querySelectorAll('.source-generated-gallery').forEach((node) => node.remove());
     if (!host) return;
 
+    const slug = slugFromPath();
+    const current = host.querySelector('.source-generated-gallery');
+    if (current?.dataset.slug === slug) return;
+    current?.remove();
+
     const manifest = await loadManifest();
-    const images = manifest[slugFromPath()] || [];
+    const images = manifest[slug] || [];
     if (!images.length) return;
 
     const section = document.createElement('section');
     section.className = 'source-generated-gallery';
+    section.dataset.slug = slug;
     section.setAttribute('aria-label', 'Фотографии экскурсии');
 
-    const main = document.createElement('button');
-    main.type = 'button';
+    const main = document.createElement('div');
     main.className = 'source-gallery-main';
-    main.setAttribute('aria-label', 'Открыть фотографию');
     const mainImage = document.createElement('img');
     mainImage.src = images[0];
     mainImage.alt = '';
