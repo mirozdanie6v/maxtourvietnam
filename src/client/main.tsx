@@ -7,6 +7,7 @@ import './styles.css';
 import './tour-pages.css';
 import './source-parity.css';
 import './parity-fixes.css';
+import './source-zero-block.css';
 
 function TourMainSourceBridge() {
   const location = useLocation();
@@ -17,7 +18,7 @@ function TourMainSourceBridge() {
 
     let cancelled = false;
     let generated: HTMLElement | null = null;
-    let fallback: HTMLElement | null = null;
+    const hiddenFallbacks: HTMLElement[] = [];
     const controller = new AbortController();
 
     const mount = async () => {
@@ -30,19 +31,26 @@ function TourMainSourceBridge() {
         const html = await response.text();
         if (cancelled || !html.includes('t396__artboard')) return;
 
+        let anchor: HTMLElement | null = null;
         for (let attempt = 0; attempt < 40 && !cancelled; attempt += 1) {
-          fallback = document.querySelector<HTMLElement>('.source-tour-main');
-          if (fallback) break;
+          anchor = document.querySelector<HTMLElement>('.source-tour-main');
+          if (anchor?.parentElement) break;
           await new Promise((resolve) => window.setTimeout(resolve, 25));
         }
-        if (cancelled || !fallback?.parentElement) return;
+        if (cancelled || !anchor?.parentElement) return;
 
         generated = document.createElement('section');
         generated.className = 'source-original-main source-generated-main';
         generated.dataset.sourceSlug = slug;
         generated.innerHTML = `<div class="source-zero-block">${html}</div>`;
-        fallback.parentElement.insertBefore(generated, fallback);
-        fallback.classList.add('source-main-fallback-hidden');
+        anchor.parentElement.insertBefore(generated, anchor);
+
+        document
+          .querySelectorAll<HTMLElement>('.source-tour-main, .source-gallery-section')
+          .forEach((node) => {
+            node.classList.add('source-main-fallback-hidden');
+            hiddenFallbacks.push(node);
+          });
       } catch (error) {
         if (!controller.signal.aborted) console.warn('Exact tour source block unavailable; using React fallback.', error);
       }
@@ -53,7 +61,7 @@ function TourMainSourceBridge() {
       cancelled = true;
       controller.abort();
       generated?.remove();
-      fallback?.classList.remove('source-main-fallback-hidden');
+      hiddenFallbacks.forEach((node) => node.classList.remove('source-main-fallback-hidden'));
     };
   }, [location.pathname]);
 
