@@ -11,85 +11,60 @@
 
   const slugFromPath = () => window.location.pathname.split('/').filter(Boolean).at(-1) || '';
 
-  function makeTopGallery(images, slug) {
-    const section = document.createElement('div');
-    section.className = 'source-cover-gallery';
+  function makeGallery(images, slug) {
+    const section = document.createElement('section');
+    section.className = 'source-generated-gallery';
     section.dataset.slug = slug;
+    section.setAttribute('aria-label', 'Фотографии экскурсии');
 
-    const heroImages = images.slice(0, Math.min(7, images.length));
     const main = document.createElement('div');
-    main.className = 'source-cover-gallery-main';
+    main.className = 'source-gallery-main';
     const mainImage = document.createElement('img');
-    mainImage.src = heroImages[0];
+    mainImage.src = images[0];
     mainImage.alt = '';
     main.append(mainImage);
 
-    if (heroImages.length > 1) {
-      const thumbs = document.createElement('div');
-      thumbs.className = 'source-cover-gallery-dots';
-      heroImages.forEach((src, index) => {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = index === 0 ? 'active' : '';
-        button.setAttribute('aria-label', `Фото ${index + 1}`);
-        button.addEventListener('click', () => {
-          mainImage.src = src;
-          thumbs.querySelectorAll('button').forEach((item) => item.classList.remove('active'));
-          button.classList.add('active');
-        });
-        thumbs.append(button);
+    const thumbs = document.createElement('div');
+    thumbs.className = 'source-gallery-thumbs';
+    images.forEach((src, index) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = `source-gallery-thumb${index === 0 ? ' active' : ''}`;
+      button.setAttribute('aria-label', `Фото ${index + 1}`);
+      const image = document.createElement('img');
+      image.src = src;
+      image.alt = '';
+      image.loading = index > 4 ? 'lazy' : 'eager';
+      button.append(image);
+      button.addEventListener('click', () => {
+        mainImage.src = src;
+        thumbs.querySelectorAll('.source-gallery-thumb').forEach((item) => item.classList.remove('active'));
+        button.classList.add('active');
       });
-      section.append(main, thumbs);
-    } else {
-      section.append(main);
-    }
-    return section;
-  }
+      thumbs.append(button);
+    });
 
-  function makeProgramImage(src, slug) {
-    const figure = document.createElement('figure');
-    figure.className = 'source-program-image';
-    figure.dataset.slug = slug;
-    const image = document.createElement('img');
-    image.src = src;
-    image.alt = '';
-    image.loading = 'lazy';
-    figure.append(image);
-    return figure;
+    section.append(main, thumbs);
+    return section;
   }
 
   async function renderGallery() {
     scheduled = false;
     const slug = slugFromPath();
-    const cover = document.querySelector('.source-tour-cover');
     const host = document.querySelector('.source-tour-main .source-tour-narrow');
-    if (!cover || !host) return;
+    if (!host) return;
 
     const manifest = await loadManifest();
     const images = manifest[slug] || [];
+    const current = host.querySelector('.source-generated-gallery');
+    if (current?.dataset.slug === slug) return;
+    current?.remove();
     if (!images.length) return;
 
-    const currentCover = cover.querySelector('.source-cover-gallery');
-    if (currentCover?.dataset.slug !== slug) {
-      cover.innerHTML = '';
-      cover.append(makeTopGallery(images, slug));
-    }
-
-    host.querySelectorAll('.source-generated-gallery').forEach((node) => node.remove());
-    const oldProgramImage = host.querySelector('.source-program-image');
-    if (oldProgramImage?.dataset.slug !== slug) oldProgramImage?.remove();
-
-    // Source pages place a standalone visual between timing/prices and the
-    // ordered program. The first seven source images belong to the top gallery.
-    if (images[7] && !host.querySelector('.source-program-image')) {
-      const figure = makeProgramImage(images[7], slug);
-      const locations = host.querySelector('.source-location-list');
-      if (locations) host.insertBefore(figure, locations);
-      else {
-        const features = host.querySelector('.source-features-section');
-        host.insertBefore(figure, features || null);
-      }
-    }
+    const gallery = makeGallery(images, slug);
+    const features = host.querySelector('.source-features-section');
+    if (features) features.insertAdjacentElement('afterend', gallery);
+    else host.append(gallery);
   }
 
   function scheduleRender() {
