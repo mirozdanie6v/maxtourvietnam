@@ -7,6 +7,7 @@ const files = [
   'src/client/tourDetails.ts',
   'src/client/styles.css',
   'src/client/tour-pages.css',
+  'seed/tours.sql',
 ];
 const outDir = 'public/mirror-media';
 const urlPattern = /https:\/\/(?:static|thb)\.tildacdn\.(?:one|net|com)\/[^'"\s)]+/g;
@@ -46,4 +47,4 @@ for (const file of files) {
   for (const [source, local] of sources) text = text.split(source).join(local);
   await writeFile(file, text, 'utf8');
 }
-console.log(`Localized ${sources.size} Tilda media assets into the deployment bundle.`);
+console.log(`Localized ${sources.size} Tilda media assets into the deployment bundle and D1 seed.`);
