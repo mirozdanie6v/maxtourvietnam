@@ -78,9 +78,9 @@ function Layout({ children }: { children: React.ReactNode }) {
     <header className="site-header">
       <Link className="brand" to="/" aria-label="MAX TOUR — на главную"><img src={brand.logo} alt="MAX TOUR" /></Link>
       <div className="header-actions">
-        <SocialLink kind="max" href={brand.maxMessenger} label="MAX" compact />
-        <SocialLink kind="telegram" href={brand.managerTelegram} label="Telegram" compact />
         <SocialLink kind="whatsapp" href={brand.whatsapp} label="WhatsApp" compact />
+        <SocialLink kind="telegram" href={brand.managerTelegram} label="Telegram" compact />
+        <SocialLink kind="instagram" href={brand.instagram} label="Instagram" compact />
         <button className="menu-button" onClick={() => setMenuOpen(true)} aria-label="Открыть меню"><span /><span /><span /></button>
       </div>
     </header>
@@ -91,9 +91,9 @@ function Layout({ children }: { children: React.ReactNode }) {
       <img className="menu-logo" src={brand.logo} alt="MAX TOUR" />
       <nav>{sidebarLinks.map(([label, href], index) => <Link key={`${href}-${index}`} to={href}>{label}</Link>)}</nav>
       <div className="side-socials">
-        <SocialLink kind="max" href={brand.maxMessenger} label="MAX" />
-        <SocialLink kind="telegram" href={brand.managerTelegram} label="Telegram" />
         <SocialLink kind="whatsapp" href={brand.whatsapp} label="WhatsApp" />
+        <SocialLink kind="telegram" href={brand.managerTelegram} label="Telegram" />
+        <SocialLink kind="instagram" href={brand.instagram} label="Instagram" />
       </div>
       <div className="side-contacts"><a href={`tel:${brand.phone}`}>{brand.phone}</a><a href={`mailto:${brand.email}`}>{brand.email}</a></div>
     </aside>
@@ -165,7 +165,7 @@ function BookingForm({ tourTitle }: { tourTitle?: string }) {
   const [travelers, setTravelers] = useState(1);
   const [sent, setSent] = useState(false);
   const submit = (event: FormEvent<HTMLFormElement>) => { event.preventDefault(); setSent(true); };
-  return <section className="section booking-section"><div className="container"><div className="booking-box"><h2>Забронировать тур</h2>{tourTitle && <p className="booking-tour-name">{tourTitle}</p>}<form onSubmit={submit}><label><span>Желаемая дата *</span><div className="input-with-icon"><input type="date" required /><b>▣</b></div></label><label><span>Ваше имя *</span><div className="input-with-icon"><input type="text" placeholder="Иван" required /><b>◉</b></div></label><label><span>Название вашего отеля *</span><input type="text" placeholder="Например: Nha Trang Sunrise" required /></label><label><span>Количество путешественников</span><div className="traveler-stepper"><button type="button" onClick={() => setTravelers((value) => Math.max(1, value - 1))}>−</button><output>{travelers}</output><button type="button" onClick={() => setTravelers((value) => value + 1)}>+</button></div></label><button className="button button-primary form-submit" type="submit">Забронировать тур</button>{sent && <p className="form-success">Выберите удобный мессенджер, чтобы отправить заявку менеджеру.</p>}</form><div className="booking-messengers"><a className="messenger-button whatsapp-button" href={brand.whatsapp} target="_blank" rel="noreferrer"><SocialIcon kind="whatsapp" />ОТПРАВИТЬ В WhatsApp</a><a className="messenger-button max-button" href={brand.maxMessenger} target="_blank" rel="noreferrer"><SocialIcon kind="max" />ОТПРАВИТЬ В MAX</a><a className="messenger-button telegram-button" href={brand.managerTelegram} target="_blank" rel="noreferrer"><SocialIcon kind="telegram" />ОТПРАВИТЬ В Telegram</a></div></div></div></section>;
+  return <section className="section booking-section"><div className="container"><div className="booking-box"><h2>Забронировать тур</h2>{tourTitle && <p className="booking-tour-name">{tourTitle}</p>}<form onSubmit={submit}><label><span>Желаемая дата *</span><div className="input-with-icon"><input type="date" required /><b>▣</b></div></label><label><span>Ваше имя *</span><div className="input-with-icon"><input type="text" placeholder="Иван" required /><b>◉</b></div></label><label><span>Название вашего отеля *</span><input type="text" placeholder="Например: Nha Trang Sunrise" required /></label><label><span>Количество путешественников</span><div className="traveler-stepper"><button type="button" onClick={() => setTravelers((value) => Math.max(1, value - 1))}>−</button><output>{travelers}</output><button type="button" onClick={() => setTravelers((value) => value + 1)}>+</button></div></label><button className="button button-primary form-submit" type="submit">Забронировать тур</button>{sent && <p className="form-success">Выберите удобный мессенджер, чтобы отправить заявку менеджеру.</p>}</form><div className="booking-messengers"><a className="messenger-button whatsapp-button" href={brand.whatsapp} target="_blank" rel="noreferrer"><SocialIcon kind="whatsapp" />ОТПРАВИТЬ В WhatsApp</a><a className="messenger-button telegram-button" href={brand.managerTelegram} target="_blank" rel="noreferrer"><SocialIcon kind="telegram" />ОТПРАВИТЬ В Telegram</a><a className="messenger-button max-button" href={brand.maxMessenger} target="_blank" rel="noreferrer"><SocialIcon kind="max" />ОТПРАВИТЬ В MAX</a></div></div></div></section>;
 }
 
 function FAQ({ items = commonTourFaq }: { items?: FaqItem[] }) {
@@ -193,6 +193,12 @@ function TourGallery({ images, title }: { images: string[]; title: string }) {
   return <section className="section source-gallery-section"><div className="container source-tour-narrow"><h2>Фотографии экскурсии</h2><div className="source-gallery-main"><img src={images[active]} alt={`${title} — фото ${active + 1}`} /></div><div className="source-gallery-strip" aria-label={`Фотографии: ${title}`}>{images.map((image, index) => <button type="button" key={`${image}-${index}`} className={index === active ? 'active' : ''} onClick={() => setActive(index)} aria-label={`Открыть фото ${index + 1}`}><img src={image} alt="" loading="lazy" /></button>)}</div></div></section>;
 }
 
+function getTourHeroTitle(slug: string, title: string) {
+  if (slug === 'dnevnaya-obzornaya-ekskursiya-po-nyachangu') return 'ДНЕВНАЯ ОБЗОРНАЯ ПО НЯЧАНГУ';
+  if (slug === 'vechernyaya-obzornaya-ekskursiya-po-nyachangu') return 'ВЕЧЕРНЯЯ ОБЗОРНАЯ ПО НЯЧАНГУ';
+  return title.toUpperCase();
+}
+
 function TourPage() {
   const { slug } = useParams();
   const tour = tours.find((item) => item.slug === slug);
@@ -212,19 +218,26 @@ function TourPage() {
   const generated = generatedReviews[tour.slug] || [];
   const reviews = generated.length ? generated : (tourReviews[tour.slug] || []);
   const reviewTitle = reviewTitles[tour.slug] || `Отзывы о «${tour.title}»`;
+  const heroTitle = getTourHeroTitle(tour.slug, tour.title);
 
   return <>
-    <section className="source-tour-top"><div className="container source-tour-topbar"><a className="button button-primary" href="#booking">ЗАБРОНИРОВАТЬ</a></div><div className="source-tour-cover"><img src={tour.image} alt={tour.title} /></div></section>
+    <section className="source-tour-top">
+      <div className="source-tour-cover">
+        <img src={tour.image} alt={tour.title} />
+        <div className="source-tour-cover-shade" />
+        <div className="source-tour-cover-copy"><p>{heroTitle}</p><a className="button button-primary" href="#booking">ЗАБРОНИРОВАТЬ</a></div>
+      </div>
+    </section>
     <section className="source-tour-main section"><div className="container source-tour-narrow">
       {special?.programTabs?.length ? <div className="source-program-tabs">{special.programTabs.map((tab) => <span key={tab}>{tab}</span>)}</div> : null}
       {special?.intro?.length ? <div className="source-special-intro">{special.intro.map((line) => <p key={line}>{line}</p>)}</div> : null}
       <h1>{tour.title}</h1>
-      {tour.badge && <span className={`tour-badge source-detail-badge badge-${tour.badge.replace(' ', '-')}`}>{tour.badge}</span>}
-      <div className="source-tour-meta-head"><h2>Локации которые вы посетите:</h2><div className="source-price-grid">{priceSections.map((section) => <PricePanel key={section.title} title={section.title} lines={section.lines} />)}</div></div>
       {schedule.length > 0 && <div className="source-schedule">{schedule.map((item) => <div key={item}><span>●</span><strong>{item}</strong></div>)}</div>}
       {detail?.notice && <div className="source-notice">{detail.notice}</div>}
-      {locations.length > 0 ? <div className="source-location-list">{locations.map((location, index) => <article className="source-location" key={`${location.name}-${index}`}><div className="source-location-number">{String(index + 1).padStart(2, '0')}</div><div><h3>{location.name}</h3>{location.description && <p>{location.description}</p>}</div></article>)}</div> : null}
-      {(included.length > 0 || bring.length > 0) && <section className="source-features-section"><h2>Особенности тура:</h2><div className="source-two-columns">{included.length > 0 && <div><h3>Включено:</h3><ul>{included.map((item) => <li key={item}>{item}</li>)}</ul></div>}{bring.length > 0 && <div><h3>Что взять с собой:</h3><ul>{bring.map((item) => <li key={item}>{item}</li>)}</ul></div>}</div></section>}
+      {locations.length > 0 && <><div className="source-tour-meta-head"><h2>Локации которые вы посетите:</h2></div><div className="source-location-list">{locations.map((location, index) => <article className="source-location" key={`${location.name}-${index}`}><div className="source-location-number">{String(index + 1).padStart(2, '0')}</div><div><h3>{location.name}</h3>{location.description && <p>{location.description}</p>}</div></article>)}</div></>}
+      <div className="source-price-grid source-price-grid-after-route">{priceSections.map((section) => <PricePanel key={section.title} title={section.title} lines={section.lines} />)}</div>
+      {included.length > 0 && <section className="source-features-section"><h2>Особенности тура:</h2><div className="source-feature-card"><h3>Включено:</h3><ul>{included.map((item) => <li key={item}>{item}</li>)}</ul></div></section>}
+      {bring.length > 0 && <section className="source-bring-section"><h2>Что взять с собой:</h2><div className="source-feature-card"><ul>{bring.map((item) => <li key={item}>{item}</li>)}</ul></div></section>}
     </div></section>
     <TourGallery images={gallery} title={tour.title} />
     <div id="booking"><BookingForm tourTitle={tour.title} /></div>
@@ -238,7 +251,7 @@ function NotFoundPage() {
 }
 
 function Footer() {
-  return <footer className="footer"><div className="container footer-main"><div className="footer-copy">Copyright © 2026 MaxTour | Powered by TINA</div><div className="footer-socials"><SocialLink kind="whatsapp" href={brand.whatsapp} label="WhatsApp" /><SocialLink kind="max" href={brand.maxMessenger} label="MAX" /><SocialLink kind="telegram" href={brand.managerTelegram} label="Telegram" /></div><div className="footer-contacts"><a href={`mailto:${brand.email}`}>{brand.email}</a><a href={`tel:${brand.phone}`}>{brand.phone}</a></div></div></footer>;
+  return <footer className="footer"><div className="container footer-main footer-main-source"><Link className="footer-logo" to="/"><img src={brand.logo} alt="MAX TOUR" /></Link><div className="footer-socials"><SocialLink kind="whatsapp" href={brand.whatsapp} label="WhatsApp" /><SocialLink kind="telegram" href={brand.managerTelegram} label="Telegram" /><SocialLink kind="instagram" href={brand.instagram} label="Instagram" /><SocialLink kind="vk" href="https://vk.com/maxtourvietnam" label="VK" /></div><div className="footer-contacts"><a href={`mailto:${brand.email}`}>{brand.email}</a><a href={`tel:${brand.phone}`}>{brand.phone}</a></div><div className="footer-copy">Copyright © 2026 MaxTour | Powered by TINA</div><div className="footer-tilda">Made on Tilda</div></div></footer>;
 }
 
 export default function AppV2() {
