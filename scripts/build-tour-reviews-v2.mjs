@@ -62,58 +62,76 @@ const namePattern = /^[A-ZА-ЯЁ][A-Za-zА-Яа-яЁё-]{1,24}(?:\s+[A-ZА-ЯЁ
 const ratingPattern = /^[★☆⭐✦✭\s]{3,10}$/;
 
 const isName = (line) => line.length <= 45 && namePattern.test(line) && !blockedShort.test(line);
-const isText = (line) => line.length >= 45 && line.length <= 900 && !/^https?:/i.test(line) && !/^отзывы/i.test(line) && !/^часто задаваемые/i.test(line);
+const isText = (line) => line.length >= 45 && line.length <= 1200 && !/^https?:/i.test(line) && !/^отзывы/i.test(line) && !/^часто задаваемые/i.test(line);
 
 function extractReviews(html) {
   const lines = visibleLines(html);
   const markers = lines.map((line, index) => ({ line, index })).filter(({ line }) => /^отзывы\b/i.test(line));
   if (!markers.length) return [];
 
-  // Prefer the last explicit review section; menu/anchor labels can appear earlier in Tilda pages.
-  const start = markers.at(-1).index;
-  const tail = lines.slice(start + 1, start + 110);
-  const end = tail.findIndex((line) => /^(часто задаваемые вопросы|похожие экскурсии|другие экскурсии|контакты|copyright|©)/i.test(line));
-  const section = (end >= 0 ? tail.slice(0, end) : tail)
-    .filter((line) => !ratingPattern.test(line))
-    .filter((line) => !/^забронировать$/i.test(line));
+  // Tilda's current MAX TOUR review block is visually laid out as:
+  // [review texts] -> ["Отзывы о ..." heading] -> [names + stars].
+  // The text and author columns are separate DOM groups, so proximity pairing fails.
+  const marker = markers.at(-1);
+  const headingIndex = marker.index;
 
+  const chooserIndex = (() => {
+    for (let index = headingIndex - 1; index >= Math.max(0, headingIndex - 80); index -= 1) {
+      if (/выберите, где вам удобнее общаться с менеджером/i.test(lines[index])) return index;
+    }
+    return Math.max(0, headingIndex - 24);
+  })();
+
+  const textSection = lines.slice(chooserIndex + 1, headingIndex)
+    .filter((line) => !/^(whatsapp|telegram|max)$/i.test(line))
+    .filter((line) => !ratingPattern.test(line));
+
+  // Review prose is the last contiguous group of long sentences before the heading.
+  const reviewTexts = [];
+  for (let index = textSection.length - 1; index >= 0; index -= 1) {
+    const line = textSection[index];
+    if (isText(line)) {
+      reviewTexts.unshift(line);
+      if (reviewTexts.length >= 8) break;
+      continue;
+    }
+    if (reviewTexts.length && line.length > 0 && !/^(whatsapp|telegram|max)$/i.test(line)) break;
+  }
+
+  // Names appear immediately after the heading, interleaved with star rows.
+  const authorSection = lines.slice(headingIndex + 1, headingIndex + 40);
+  const names = authorSection
+    .filter((line) => !ratingPattern.test(line))
+    .filter(isName)
+    .slice(0, reviewTexts.length || 8)
+    .map((name) => name.replace(/\.$/, ''));
+
+  const count = Math.min(reviewTexts.length, names.length);
+  if (count > 0) return Array.from({ length: count }, (_, index) => ({ name: names[index], text: reviewTexts[index] }));
+
+  // Legacy fallback for any page whose Tilda block still uses name/text proximity.
+  const tail = lines.slice(headingIndex + 1, headingIndex + 110);
+  const end = tail.findIndex((line) => /^(часто задаваемые вопросы|похожие экскурсии|другие экскурсии|контакты|copyright|©)/i.test(line));
+  const section = (end >= 0 ? tail.slice(0, end) : tail).filter((line) => !ratingPattern.test(line));
   const reviews = [];
   const usedText = new Set();
-  const usedNames = new Set();
-
   for (let index = 0; index < section.length; index += 1) {
     const line = section[index];
     if (!isName(line)) continue;
-
     let text = '';
-    for (let offset = 1; offset <= 5 && !text; offset += 1) {
+    for (let offset = 1; offset <= 6 && !text; offset += 1) {
       const before = section[index - offset];
       if (before && isText(before) && !usedText.has(before)) text = before;
     }
-    for (let offset = 1; offset <= 5 && !text; offset += 1) {
+    for (let offset = 1; offset <= 6 && !text; offset += 1) {
       const after = section[index + offset];
       if (after && isText(after) && !usedText.has(after)) text = after;
     }
     if (!text) continue;
-
-    const name = line.replace(/\.$/, '');
-    const key = `${name.toLowerCase()}|${text.toLowerCase()}`;
-    if (usedNames.has(key)) continue;
     usedText.add(text);
-    usedNames.add(key);
-    reviews.push({ name, text });
+    reviews.push({ name: line.replace(/\.$/, ''), text });
     if (reviews.length >= 8) break;
   }
-
-  // Fallback for layouts where review cards are text first and names are visually separated.
-  if (!reviews.length) {
-    const texts = section.filter(isText).slice(0, 8);
-    const names = section.filter(isName).slice(0, texts.length);
-    for (let index = 0; index < Math.min(texts.length, names.length); index += 1) {
-      reviews.push({ name: names[index].replace(/\.$/, ''), text: texts[index] });
-    }
-  }
-
   return reviews;
 }
 
@@ -125,10 +143,16 @@ for (const [index, tour] of tours.entries()) {
   await sleep(350);
 }
 
+const daily = output['dnevnaya-obzornaya-ekskursiya-po-nyachangu'] || [];
+if (daily.length < 4) throw new Error(`Review extraction regression: expected >=4 daily Nha Trang reviews, got ${daily.length}`);
+
+const total = Object.values(output).reduce((sum, rows) => sum + rows.length, 0);
+if (total < 4) throw new Error(`Review extraction regression: expected reviews across source pages, got ${total}`);
+
 const json = JSON.stringify(output, null, 2);
 await writeFile(
   OUTPUT_FILE,
   `// Generated from public MAX TOUR tour pages during production source sync.\nexport type GeneratedReview = { name: string; text: string };\nexport const generatedReviews: Record<string, GeneratedReview[]> = ${json};\n`,
   'utf8',
 );
-console.log(`Generated reviews for ${tours.length} tour pages.`);
+console.log(`Generated ${total} reviews across ${tours.length} tour pages.`);
