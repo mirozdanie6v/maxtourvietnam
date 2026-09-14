@@ -1,0 +1,109 @@
+.source-generated-main {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #fff;
+}
+
+.source-generated-main .source-zero-block,
+.source-generated-main .t-rec {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.source-main-fallback-hidden {
+  display: none !important;
+}
+
+/* Minimal Tilda ZeroBlock runtime CSS. Page-specific geometry remains inside each
+   generated record, while these rules replace the global Tilda stylesheet that
+   is intentionally not loaded in production. */
+.source-generated-main .t396 {
+  position: relative;
+  width: 100%;
+}
+
+.source-generated-main .t396__artboard {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: transparent;
+}
+
+.source-generated-main .t396__artboard.rendered,
+.source-generated-main .t396__artboard[data-artboard-recid] {
+  visibility: visible;
+}
+
+.source-generated-main .t396__carrier,
+.source-generated-main .t396__filter {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.source-generated-main .t396__carrier {
+  z-index: 0;
+  background-position: center center;
+  background-attachment: scroll;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transform: translate3d(0, 0, 0);
+}
+
+.source-generated-main .t396__filter {
+  z-index: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.source-generated-main .t396__elem {
+  position: absolute;
+  z-index: 1;
+  box-sizing: border-box;
+  transform-origin: center center;
+}
+
+.source-generated-main .t396__elem .tn-atom {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.source-generated-main .t396__elem[data-elem-type='text'] .tn-atom {
+  display: block;
+  white-space: normal;
+}
+
+.source-generated-main .t396__elem[data-elem-type='button'] .tn-atom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.source-generated-main .t396__elem[data-elem-type='image'] .tn-atom {
+  line-height: 0;
+}
+
+.source-generated-main .tn-atom__img,
+.source-generated-main .t-img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.source-generated-main a {
+  color: inherit;
+}
+
+@media (max-width: 480px) {
+  .source-generated-main {
+    overflow-x: clip;
+  }
+}
