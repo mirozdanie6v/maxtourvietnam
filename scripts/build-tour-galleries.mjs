@@ -64,9 +64,11 @@ for (const [tourIndex, tour] of tours.entries()) {
   console.log(`[gallery ${tourIndex + 1}/${tours.length}] ${tour.slug}: ${localImages.length} local images`);
 }
 
+const json = JSON.stringify(galleries, null, 2);
+await writeFile('public/tour-galleries.json', `${json}\n`, 'utf8');
 await writeFile(
   'src/client/generatedGalleries.ts',
-  `// Generated from public MAX TOUR pages during build. All URLs below are local deployment assets.\nexport const generatedGalleries: Record<string, string[]> = ${JSON.stringify(galleries, null, 2)};\n`,
+  `// Generated from public MAX TOUR pages during build. All URLs below are local deployment assets.\nexport const generatedGalleries: Record<string, string[]> = ${json};\n`,
   'utf8',
 );
 
