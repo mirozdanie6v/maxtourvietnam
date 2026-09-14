@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/build-tour-facts.mjs && node scripts/build-tour-galleries.mjs && node scripts/localize-media.mjs && npm run typecheck && vite build",
+    "build": "node scripts/build-tour-facts-v2.mjs && node scripts/build-tour-galleries-v2.mjs && node scripts/localize-media.mjs && npm run typecheck && vite build",
     "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.worker.json",
     "preview": "vite preview",
     "cf:dev": "wrangler dev",
