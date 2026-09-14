@@ -1,3 +1,5 @@
+import { sourceMeta } from './sourceMeta';
+
 interface Env {
   DB: D1Database;
   ASSETS: Fetcher;
@@ -11,6 +13,34 @@ const json = (data: unknown, init: ResponseInit = {}) =>
       ...(init.headers || {}),
     },
   });
+
+const escapeHtml = (value: string) => value
+  .replaceAll('&', '&amp;')
+  .replaceAll('<', '&lt;')
+  .replaceAll('>', '&gt;')
+  .replaceAll('"', '&quot;');
+
+async function withSourceMeta(request: Request, response: Response): Promise<Response> {
+  const contentType = response.headers.get('content-type') || '';
+  if (!contentType.includes('text/html')) return response;
+
+  const url = new URL(request.url);
+  const meta = sourceMeta(url.pathname);
+  if (!meta) return response;
+
+  const canonical = `https://maxtourvietnam.viiversion.com${url.pathname}`;
+  let html = await response.text();
+  html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeHtml(meta.title)}</title>`);
+  html = html.replace(
+    '</head>',
+    `<meta name="description" content="${escapeHtml(meta.description)}" />\n<link rel="canonical" href="${escapeHtml(canonical)}" />\n<meta property="og:title" content="${escapeHtml(meta.title)}" />\n<meta property="og:description" content="${escapeHtml(meta.description)}" />\n<meta property="og:url" content="${escapeHtml(canonical)}" />\n</head>`,
+  );
+
+  const headers = new Headers(response.headers);
+  headers.delete('content-length');
+  headers.set('content-type', 'text/html; charset=utf-8');
+  return new Response(html, { status: response.status, statusText: response.statusText, headers });
+}
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
@@ -44,6 +74,7 @@ export default {
       return tour ? json({ tour }) : json({ error: 'Tour not found' }, { status: 404 });
     }
 
-    return env.ASSETS.fetch(request);
+    const response = await env.ASSETS.fetch(request);
+    return withSourceMeta(request, response);
   },
 };
