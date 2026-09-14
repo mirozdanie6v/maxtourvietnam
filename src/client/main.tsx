@@ -45,12 +45,14 @@ function TourMainSourceBridge() {
         generated.innerHTML = `<div class="source-zero-block">${html}</div>`;
         anchor.parentElement.insertBefore(generated, anchor);
 
-        document
-          .querySelectorAll<HTMLElement>('.source-tour-main, .source-gallery-section')
-          .forEach((node) => {
-            node.classList.add('source-main-fallback-hidden');
-            hiddenFallbacks.push(node);
-          });
+        // The exact ZeroBlock contains the original program, schedule, prices and
+        // feature content. The source photo gallery is a separate Tilda record,
+        // so keep our independently mirrored local gallery visible immediately
+        // after this block. Only the reconstructed program is the fallback.
+        document.querySelectorAll<HTMLElement>('.source-tour-main').forEach((node) => {
+          node.classList.add('source-main-fallback-hidden');
+          hiddenFallbacks.push(node);
+        });
       } catch (error) {
         if (!controller.signal.aborted) console.warn('Exact tour source block unavailable; using React fallback.', error);
       }
