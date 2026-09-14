@@ -13,6 +13,9 @@ export type Tour = {
   popular?: boolean;
 };
 
+const managerText = encodeURIComponent('Добрый день. Меня интересует экскурсия...');
+const whatsappText = encodeURIComponent('Добрый день! Меня интересует экскурсия');
+
 export const brand = {
   logo: 'https://static.tildacdn.one/tild3138-3137-4031-a331-373835366439/____1680_x_600_-2.svg',
   brandImage: 'https://static.tildacdn.one/tild3938-3763-4364-a165-666362383464/Max_Tour-3.jpg',
@@ -20,10 +23,11 @@ export const brand = {
   phone: '+84384850407',
   email: 'maxtournhatrang@gmail.com',
   instagram: 'https://www.instagram.com/maxtourvietnam/',
-  telegram: 'https://t.me/maxtournhatrang',
-  managerTelegram: 'https://t.me/manager_po_ekskursiyam',
-  whatsapp: 'https://wa.me/84384850407',
-  maxMessenger: 'https://max.ru/u/f9LHodD0cOJQGE6a59IAQqjiCYN9YO-yF_cBvgPtZLPAksl7TPfP-HZ5dpM',
+  telegram: `https://t.me/manager_po_ekskursiyam?text=${managerText}`,
+  telegramChannel: 'https://t.me/maxtournhatrang',
+  managerTelegram: `https://t.me/manager_po_ekskursiyam?text=${managerText}`,
+  whatsapp: `https://wa.me/84384850407?text=${whatsappText}`,
+  maxMessenger: 'https://max.ru/u/f9LHodD0cOJQGE6a59IAQqjiCYN9YO-yF_cBvgPtZLPAksl7TPfP-HZ5dpM?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGn56uHoupPGmSeywR4SMQvetY0rwX9rcG6D2JG2sQX_yBISRQQOqVDwVM0kEg_aem_NZs3VVg3ZPzvxSMEhrB30Q',
 };
 
 export const heroSlides = [
@@ -51,7 +55,7 @@ export const tours: Tour[] = [
     sourceUrl: 'https://maxtourvietnam.com/vechernyaya-obzornaya-ekskursiya-po-nyachangu',
   },
   {
-    slug: 'danang-i-hoyan-na-2-dnya-iz-nyachanga', title: 'Дананг и Хоян на 2 дня из Нячанга',
+    slug: 'danang-i-hoyan-na-2-dnya-iz-nyachanga', title: 'Экскурсия в Дананг и Хойан на 2 дня из Нячанга',
     image: 'https://static.tildacdn.one/tild3333-6437-4133-b165-333831306339/11.png', category: 'Другие города', adultPrice: 215, childPrice: 165, badge: 'хит лета', popular: true,
     sourceUrl: 'https://maxtourvietnam.com/danang-i-hoyan-na-2-dnya-iz-nyachanga',
   },
@@ -76,7 +80,7 @@ export const tours: Tour[] = [
     sourceUrl: 'https://maxtourvietnam.com/ekskursiya-v-fanrang-iz-nyachanga',
   },
   {
-    slug: 'ekskursiya-v-fuyen-iz-nyachanga', title: 'Экскурсия в Фуен из Нячанга',
+    slug: 'ekskursiya-v-fuyen-iz-nyachanga', title: 'Экскурсия в Фуйен из Нячанга',
     image: 'https://static.tildacdn.one/tild3465-3666-4537-b237-363730356339/6.png', category: 'Нячанг', adultPrice: 40, childPrice: 30, badge: 'новинка', popular: true,
     sourceUrl: 'https://maxtourvietnam.com/ekskursiya-v-fuyen-iz-nyachanga',
   },
@@ -87,66 +91,66 @@ export const tours: Tour[] = [
   },
   {
     slug: 'ekskursiya-v-dalat-so-steklyannym-mostom-iz-nyachanga', title: 'Экскурсия в Далат со стеклянным мостом из Нячанга',
-    image: 'https://static.tildacdn.one/tild6364-3464-4566-a261-623638643137/2.png', category: 'Нячанг', adultPrice: 60, childPrice: 45, badge: 'хит лета',
+    image: 'https://static.tildacdn.one/tild6364-3464-4566-a261-623638643137/2.png', category: 'Нячанг', adultPrice: 60, childPrice: 42, badge: 'хит лета',
     sourceUrl: 'https://maxtourvietnam.com/ekskursiya-v-dalat-so-steklyannym-mostom-iz-nyachanga',
   },
   {
-    slug: 'vip-ekskursiya-v-dalat-iz-nyachanga', title: 'VIP экскурсия в Далат из Нячанга',
-    image: 'https://static.tildacdn.one/tild3536-6562-4632-b564-393961346366/4.png', category: 'Премиум', adultPrice: 45, childPrice: 35, badge: 'новинка', popular: true,
+    slug: 'vip-ekskursiya-v-dalat-iz-nyachanga', title: 'Экскурсия в Далат "ВИП" из Нячанга',
+    image: 'https://static.tildacdn.one/tild3536-6562-4632-b564-393961346366/4.png', category: 'Премиум', adultPrice: 45, childPrice: 32, badge: 'новинка', popular: true,
     sourceUrl: 'https://maxtourvietnam.com/vip-ekskursiya-v-dalat-iz-nyachanga',
   },
   {
-    slug: 'ekskursiya-v-dalat-iz-nyachanga-premium', title: 'Экскурсия в Далат из Нячанга Premium',
-    image: 'https://static.tildacdn.one/tild6232-3736-4363-b364-323135306337/1.png', category: 'Премиум', adultPrice: 52, childPrice: 43, badge: 'хит лета',
+    slug: 'ekskursiya-v-dalat-iz-nyachanga-premium', title: 'Экскурсия в Далат из Нячанга Премиум',
+    image: 'https://static.tildacdn.one/tild6232-3736-4363-b364-323135306337/1.png', category: 'Премиум', adultPrice: 52, childPrice: 38, badge: 'хит лета',
     sourceUrl: 'https://maxtourvietnam.com/ekskursiya-v-dalat-iz-nyachanga-premium',
   },
   {
-    slug: 'ostrov-doidep-nyachang', title: 'Остров Дойдеп Нячанг',
+    slug: 'ostrov-doidep-nyachang', title: 'Экскурсия на Остров Дойдеп (Doidep) в Нячанге',
     image: 'https://static.tildacdn.one/tild6537-3962-4134-b630-326630613066/ostrov-doidep-2.png', category: 'Нячанг', adultPrice: 75, childPrice: 55, badge: 'эксклюзив',
     sourceUrl: 'https://maxtourvietnam.com/ostrov-doidep-nyachang',
   },
   {
-    slug: 'vinwonders-marriott-nyachang-2-dnya', title: 'VinWonders + Marriott Нячанг, 2 дня',
+    slug: 'vinwonders-marriott-nyachang-2-dnya', title: 'Экскурсия на Винперл и отель Marriott, Нячанг, тур на 2 дня',
     image: 'https://static.tildacdn.net/tild3539-6138-4139-b861-313231316566/vinwonders-marriott-.png', category: 'Премиум', adultPrice: 220, badge: 'супер',
     sourceUrl: 'https://maxtourvietnam.com/vinwonders-marriott-nyachang-2-dnya',
   },
   {
-    slug: 'ostrov-hon-tam-nyachang', title: 'Остров Хон Там Нячанг',
+    slug: 'ostrov-hon-tam-nyachang', title: 'Экскурсия на Остров Хон Там в Нячанге',
     image: 'https://static.tildacdn.one/tild3861-6231-4462-a235-663762633665/ostrov-hon-tam-2.png', category: 'Нячанг', adultPrice: 45, childPrice: 35, badge: 'хит лета',
     sourceUrl: 'https://maxtourvietnam.com/ostrov-hon-tam-nyachang',
   },
   {
-    slug: 'rybalka-na-ozere-nyachang', title: 'Рыбалка на озере Нячанг',
+    slug: 'rybalka-na-ozere-nyachang', title: 'Рыбалка на озере в Нячанге',
     image: 'https://static.tildacdn.one/tild6666-6332-4139-a238-313334393035/rybalka-na-ozere-nya.png', category: 'Нячанг', adultPrice: 35, childPrice: 25, badge: 'хит лета',
     sourceUrl: 'https://maxtourvietnam.com/rybalka-na-ozere-nyachang',
   },
   {
-    slug: 'ostrov-orhidey-i-obezian-nyachang', title: 'Остров орхидей и обезьян Нячанг',
+    slug: 'ostrov-orhidey-i-obezian-nyachang', title: 'Экскурсия на Остров Орхидей и Остров Обезьян',
     image: 'https://static.tildacdn.one/tild3434-6534-4637-a137-383063623031/ostrov-orhidey-i-obe.png', category: 'Нячанг', adultPrice: 36, childPrice: 28, badge: 'хит лета',
     sourceUrl: 'https://maxtourvietnam.com/ostrov-orhidey-i-obezian-nyachang',
   },
   {
-    slug: 'morskaya-rybalka-nyachang', title: 'Морская рыбалка Нячанг',
+    slug: 'morskaya-rybalka-nyachang', title: 'Морская рыбалка в Нячанге на приватном катере',
     image: 'https://static.tildacdn.one/tild6566-6533-4266-a531-333961333866/morskaya-rybalka-.png', category: 'Премиум', adultPrice: 300, badge: 'эксклюзив',
     sourceUrl: 'https://maxtourvietnam.com/morskaya-rybalka-nyachang',
   },
   {
-    slug: 'kruiz-marmoris-nyachang', title: 'Круиз Marmoris Нячанг',
+    slug: 'kruiz-marmoris-nyachang', title: 'Круиз Marmoris в Нячанге',
     image: 'https://static.tildacdn.one/tild3633-3061-4139-b231-643531363761/14D42C84-0A6F-461C-9.jpg', category: 'Премиум', adultPrice: 98, childPrice: 79, badge: 'новинка',
     sourceUrl: 'https://maxtourvietnam.com/kruiz-marmoris-nyachang',
   },
   {
-    slug: 'kruiz-emperor-nyachang', title: 'Круиз Emperor Нячанг',
+    slug: 'kruiz-emperor-nyachang', title: 'Круиз Emperor в Нячанге',
     image: 'https://static.tildacdn.one/tild6362-3431-4932-b761-626631336564/kruiz-emperor-6.png', category: 'Премиум', adultPrice: 90, childPrice: 67, badge: 'хит лета',
     sourceUrl: 'https://maxtourvietnam.com/kruiz-emperor-nyachang',
   },
   {
-    slug: 'kruiz-na-katamarane-nyachang', title: 'Круиз на катамаране Нячанг',
+    slug: 'kruiz-na-katamarane-nyachang', title: 'Круиз на катамаране в Нячанге',
     image: 'https://static.tildacdn.one/tild3635-3132-4639-b934-376331643765/0BAD15B0-60EF-4433-9.jpg', category: 'Премиум', adultPrice: 75, childPrice: 55, badge: 'эксклюзив',
     sourceUrl: 'https://maxtourvietnam.com/kruiz-na-katamarane-nyachang',
   },
   {
-    slug: 'zipline-i-verevochnyj-park-v-nyachange', title: 'Зиплайн и верёвочный парк в Нячанге',
+    slug: 'zipline-i-verevochnyj-park-v-nyachange', title: 'Экскурсия Зиплайн и веревочный парк в Нячанге',
     image: 'https://static.tildacdn.net/tild3938-3237-4737-b234-343333626633/extrim-22.png', category: 'Нячанг', adultPrice: 58, childPrice: 40, badge: 'хит лета',
     sourceUrl: 'https://maxtourvietnam.com/zipline-i-verevochnyj-park-v-nyachange',
   },
@@ -156,7 +160,7 @@ export const tours: Tour[] = [
     sourceUrl: 'https://maxtourvietnam.com/kvadrocikly-v-nyachange',
   },
   {
-    slug: 'dayving-i-snorkling-v-nyachange', title: 'Дайвинг и снорклинг в Нячанге',
+    slug: 'dayving-i-snorkling-v-nyachange', title: 'Дайвинг и Снорклинг в Нячанге',
     image: 'https://static.tildacdn.one/tild6239-6432-4331-a533-633333326634/extrim-1.png', category: 'Нячанг', adultPrice: 90, childPrice: 45, badge: 'хит лета',
     sourceUrl: 'https://maxtourvietnam.com/dayving-i-snorkling-v-nyachange',
   },
@@ -166,7 +170,7 @@ export const tours: Tour[] = [
     sourceUrl: 'https://maxtourvietnam.com/ekskursiya-v-daklak-iz-nyachanga',
   },
   {
-    slug: 'termalnye-istochniki-yang-bay-iz-nyachanga', title: 'Термальные источники Янг Бэй из Нячанга',
+    slug: 'termalnye-istochniki-yang-bay-iz-nyachanga', title: 'Экскурсия в Термальные источники Янг Бэй',
     image: 'https://static.tildacdn.one/tild3162-3537-4034-b165-373239396436/30.png', category: 'Нячанг', adultPrice: 34, childPrice: 24, badge: 'хит лета',
     sourceUrl: 'https://maxtourvietnam.com/termalnye-istochniki-yang-bay-iz-nyachanga',
   },
@@ -176,7 +180,7 @@ export const tours: Tour[] = [
     sourceUrl: 'https://maxtourvietnam.com/dzip-tur-v-nyachange',
   },
   {
-    slug: 'ekskursiya-baho-zoklet-iz-nyachanga', title: 'Экскурсия Бахо — Зоклет из Нячанга',
+    slug: 'ekskursiya-baho-zoklet-iz-nyachanga', title: 'Экскурсия на водопад Бахо и пляж Зоклет из Нячанга',
     image: 'https://static.tildacdn.one/tild6362-3037-4265-b638-323665613039/29.png', category: 'Нячанг', adultPrice: 36, childPrice: 26, badge: 'хит лета',
     sourceUrl: 'https://maxtourvietnam.com/ekskursiya-baho-zoklet-iz-nyachanga',
   },
@@ -184,12 +188,12 @@ export const tours: Tour[] = [
 
 export const sidebarLinks = [
   ['Главная', '/'],
-  ['Экскурсии Дананга', '/tours/danang'],
-  ['Блог', '/blog'],
-  ['О нас', '/about'],
-  ['Экскурсии Фукуока', '/tours/phu-quoc'],
-  ['Экскурсии Муйне/Фантьета', '/tours/mui-ne'],
-  ['Экскурсии Ханоя', '/tours/hanoi'],
+  ['Экскурсии Дананга', '/page-not-found'],
+  ['Блог', '/page-not-found'],
+  ['О нас', '/page-not-found'],
+  ['Экскурсии Фукуока', '/page-not-found'],
+  ['Экскурсии Муйне/Фантьета', '/page-not-found'],
+  ['Экскурсии Ханоя', '/page-not-found'],
   ['Премиум экскурсии', '/premium-ekskursii-vetnam'],
   ['Экскурсии Нячанга', '/katalog-nyachang'],
 ] as const;
