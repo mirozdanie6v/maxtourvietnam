@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
     paths:
+      - 'scripts/build-tour-main-records.mjs'
       - 'scripts/diagnose-tour-blocks.mjs'
       - '.github/workflows/diagnose-tour-blocks.yml'
 
@@ -15,4 +16,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: node scripts/diagnose-tour-blocks.mjs
+      - run: node scripts/build-tour-main-records.mjs
+      - run: |
+          test "$(find public/tour-main -maxdepth 1 -name '*.html' | wc -l)" -eq 28
+          test -s public/tour-main/manifest.json
