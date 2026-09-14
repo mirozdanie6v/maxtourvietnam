@@ -1,0 +1,18 @@
+name: Diagnose tour blocks
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/diagnose-tour-blocks.mjs'
+      - '.github/workflows/diagnose-tour-blocks.yml'
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/diagnose-tour-blocks.mjs
