@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { extname } from 'node:path';
 
 const files = [
+  'index.html',
   'src/client/data.ts',
   'src/client/tourDetails.ts',
   'src/client/styles.css',
