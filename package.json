@@ -14,7 +14,7 @@
     "sync:parity": "node scripts/apply-source-parity.mjs",
     "sync:galleries": "node scripts/build-tour-galleries-v2.mjs",
     "sync:reviews": "node scripts/build-tour-reviews-v2.mjs",
-    "sync:main-records": "node scripts/build-tour-main-records.mjs",
+    "sync:main-records": "node scripts/build-tour-main-records.mjs && node scripts/promote-tour-main-backgrounds.mjs",
     "sync:media": "node scripts/localize-media.mjs",
     "sync:source": "npm run sync:facts && npm run sync:parity && npm run sync:galleries && npm run sync:reviews && npm run sync:main-records && npm run sync:media",
     "db:migrate:local": "wrangler d1 migrations apply maxtourvietnam --local",
