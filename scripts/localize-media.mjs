@@ -2,7 +2,7 @@ import { mkdir, readFile, readdir, stat, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { extname, join } from 'node:path';
 
-const roots = ['index.html', 'src/client', 'seed'];
+const roots = ['index.html', 'src/client', 'seed', 'public/tour-main'];
 const allowedExtensions = new Set(['.html', '.ts', '.tsx', '.css', '.sql']);
 const outDir = 'public/mirror-media';
 const urlPattern = /https:\/\/(?:static|thb)\.tildacdn\.(?:one|net|com)\/[^'"\s)]+/g;
