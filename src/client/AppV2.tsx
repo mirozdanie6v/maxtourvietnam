@@ -1,6 +1,8 @@
 import { FormEvent, useEffect, useMemo, useState } from 'react';
 import { Link, Route, Routes, useLocation, useParams } from 'react-router-dom';
 import { brand, heroSlides, sidebarLinks, tours } from './data';
+import { generatedGalleries } from './generatedGalleries';
+import { generatedReviews } from './generatedReviews';
 import { tourDetails } from './tourDetails';
 import {
   commonTourFaq,
@@ -33,13 +35,15 @@ function useDocumentMeta() {
     const slug = location.pathname.split('/').filter(Boolean).at(-1) || '';
     const tour = tours.find((item) => item.slug === slug);
     let title = 'MAX TOUR Vietnam';
-    let description = 'Экскурсии в Нячанге';
+    let description = DEFAULT_TOUR_DESCRIPTION;
     if (location.pathname === '/') title = 'Max Tour - Экскурсионное бюро во Вьетнаме';
     else if (tour) {
       title = tour.title;
       description = seoDescriptions[tour.slug] || DEFAULT_TOUR_DESCRIPTION;
-    } else if (location.pathname === '/katalog-nyachang') title = 'Экскурсии из Нячанга — MAX TOUR';
-    else if (location.pathname === '/premium-ekskursii-vetnam') title = 'Премиум экскурсии во Вьетнаме — MAX TOUR';
+    } else if (location.pathname === '/katalog-nyachang') {
+      title = 'Каталог экскурсий из Нячанга';
+      description = DEFAULT_TOUR_DESCRIPTION;
+    } else if (location.pathname === '/premium-ekskursii-vetnam') title = 'Премиум экскурсии во Вьетнаме — MAX TOUR';
 
     document.title = title;
     let meta = document.querySelector<HTMLMetaElement>('meta[name="description"]');
@@ -117,17 +121,6 @@ function Hero() {
   </section>;
 }
 
-function BrandShowcase() {
-  return <section className="brand-showcase section-tight">
-    <img src={brand.brandImage} alt="MAX TOUR" />
-    <div className="brand-showcase-socials">
-      <SocialLink kind="whatsapp" href={brand.whatsapp} label="WhatsApp" />
-      <SocialLink kind="telegram" href={brand.managerTelegram} label="Telegram" />
-      <SocialLink kind="max" href={brand.maxMessenger} label="MAX" />
-    </div>
-  </section>;
-}
-
 function TourCard({ tour }: { tour: (typeof tours)[number] }) {
   return <article className="tour-card">
     <Link to={`/${tour.slug}`} className="tour-image-wrap"><img src={tour.image} alt={tour.title} loading="lazy" />{tour.badge && <span className={`tour-badge badge-${tour.badge.replace(' ', '-')}`}>{tour.badge}</span>}</Link>
@@ -149,7 +142,7 @@ function CouponPromo() {
 }
 
 function CatalogPreview() {
-  return <section className="section catalog-preview"><div className="container"><div className="catalog-heading-row"><h2 className="live-heading">Каталог экскурсий из Нячанга</h2><Link to="/katalog-nyachang">Весь каталог</Link></div><div className="tour-strip catalog-strip">{tours.slice(0, 10).map((tour) => <TourCard key={tour.slug} tour={tour} />)}</div></div></section>;
+  return <section className="section catalog-preview"><div className="container"><div className="catalog-heading-row"><h2 className="live-heading">Каталог экскурсий из Нячанга</h2><Link to="/katalog-nyachang">Весь каталог</Link></div><div className="tour-strip catalog-strip">{tours.slice(0, 6).map((tour) => <TourCard key={tour.slug} tour={tour} />)}</div></div></section>;
 }
 
 function FastTrack() {
@@ -180,19 +173,24 @@ function FAQ({ items = commonTourFaq }: { items?: FaqItem[] }) {
 }
 
 function HomePage() {
-  return <><Hero /><BrandShowcase /><PopularTours /><CouponPromo /><CatalogPreview /><FastTrack /><Benefits /><BookingForm /><FAQ /></>;
+  return <><Hero /><PopularTours /><CouponPromo /><CatalogPreview /><FastTrack /><Benefits /><BookingForm /><FAQ /></>;
 }
 
 function CatalogPage({ premium = false }: { premium?: boolean }) {
   const all = useMemo(() => premium ? tours.filter((tour) => tour.category === 'Премиум') : tours, [premium]);
-  const [visible, setVisible] = useState(12);
-  useEffect(() => setVisible(12), [premium]);
-  return <><section className="catalog-page-head"><div className="container"><h1>{premium ? 'Премиум экскурсии во Вьетнаме' : 'Каталог экскурсий из Нячанга'}</h1></div></section><section className="section catalog-page"><div className="container"><div className="tour-grid">{all.slice(0, visible).map((tour) => <TourCard key={tour.slug} tour={tour} />)}</div>{visible < all.length && <button className="load-more" onClick={() => setVisible((value) => value + 8)}>ЗАГРУЗИТЬ ЕЩЕ</button>}</div></section><BookingForm /></>;
+  return <><section className="catalog-page-head"><div className="container"><h1>{premium ? 'Премиум экскурсии во Вьетнаме' : 'Каталог экскурсий из Нячанга'}</h1></div></section><section className="section catalog-page"><div className="container"><div className="tour-grid">{all.map((tour) => <TourCard key={tour.slug} tour={tour} />)}</div></div></section><FAQ /></>;
 }
 
 function PricePanel({ title, lines }: { title: string; lines: string[] }) {
   if (!lines.length) return null;
   return <div className="source-price-panel"><h3>{title}</h3>{lines.map((line) => <p key={line}>{line}</p>)}</div>;
+}
+
+function TourGallery({ images, title }: { images: string[]; title: string }) {
+  const [active, setActive] = useState(0);
+  useEffect(() => setActive(0), [title]);
+  if (!images.length) return null;
+  return <section className="section source-gallery-section"><div className="container source-tour-narrow"><h2>Фотографии экскурсии</h2><div className="source-gallery-main"><img src={images[active]} alt={`${title} — фото ${active + 1}`} /></div><div className="source-gallery-strip" aria-label={`Фотографии: ${title}`}>{images.map((image, index) => <button type="button" key={`${image}-${index}`} className={index === active ? 'active' : ''} onClick={() => setActive(index)} aria-label={`Открыть фото ${index + 1}`}><img src={image} alt="" loading="lazy" /></button>)}</div></div></section>;
 }
 
 function TourPage() {
@@ -210,7 +208,10 @@ function TourPage() {
     { title: 'Цена групповой экскурсии:', lines: groupPrices },
     ...(detail?.privatePrices?.length ? [{ title: 'Цена индивидуальной экскурсии:', lines: detail.privatePrices }] : []),
   ];
-  const reviews = tourReviews[tour.slug] || [];
+  const gallery = generatedGalleries[tour.slug] || [];
+  const generated = generatedReviews[tour.slug] || [];
+  const reviews = generated.length ? generated : (tourReviews[tour.slug] || []);
+  const reviewTitle = reviewTitles[tour.slug] || `Отзывы о «${tour.title}»`;
 
   return <>
     <section className="source-tour-top"><div className="container source-tour-topbar"><a className="button button-primary" href="#booking">ЗАБРОНИРОВАТЬ</a></div><div className="source-tour-cover"><img src={tour.image} alt={tour.title} /></div></section>
@@ -225,9 +226,10 @@ function TourPage() {
       {locations.length > 0 ? <div className="source-location-list">{locations.map((location, index) => <article className="source-location" key={`${location.name}-${index}`}><div className="source-location-number">{String(index + 1).padStart(2, '0')}</div><div><h3>{location.name}</h3>{location.description && <p>{location.description}</p>}</div></article>)}</div> : null}
       {(included.length > 0 || bring.length > 0) && <section className="source-features-section"><h2>Особенности тура:</h2><div className="source-two-columns">{included.length > 0 && <div><h3>Включено:</h3><ul>{included.map((item) => <li key={item}>{item}</li>)}</ul></div>}{bring.length > 0 && <div><h3>Что взять с собой:</h3><ul>{bring.map((item) => <li key={item}>{item}</li>)}</ul></div>}</div></section>}
     </div></section>
+    <TourGallery images={gallery} title={tour.title} />
     <div id="booking"><BookingForm tourTitle={tour.title} /></div>
     <FAQ items={tourFaqs[tour.slug] || commonTourFaq} />
-    {reviews.length > 0 && <section className="section source-reviews"><div className="container source-tour-narrow"><h2>{reviewTitles[tour.slug]}</h2><div className="source-review-grid source-review-grid-real">{reviews.map((review) => <article key={review.name}><p>{review.text}</p><h3>{review.name}</h3><strong>★★★★★</strong></article>)}</div></div></section>}
+    {reviews.length > 0 && <section className="section source-reviews"><div className="container source-tour-narrow"><h2>{reviewTitle}</h2><div className="source-review-grid source-review-grid-real">{reviews.map((review, index) => <article key={`${review.name}-${index}`}><p>{review.text}</p><h3>{review.name}</h3><strong>★★★★★</strong></article>)}</div></div></section>}
   </>;
 }
 
