@@ -158,7 +158,7 @@ if (Object.keys(manifest).length !== tours.length || tours.length !== 28) {
 const checks = [
   ['dnevnaya-obzornaya-ekskursiya-po-nyachangu', 'Пагода Лонг Шон'],
   ['danang-i-hoyan-na-2-dnya-iz-nyachanga', 'Ba Na Hills'],
-  ['vinwonders-marriott-nyachang-2-dnya', 'от 837$'],
+  ['vinwonders-marriott-nyachang-2-dnya', 'вилла 3 спальни'],
   ['zipline-i-verevochnyj-park-v-nyachange', 'Zip Line трасса'],
 ];
 for (const [slug, marker] of checks) {
