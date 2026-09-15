@@ -73,6 +73,65 @@ function HeaderSocialParityBridge() {
   return null;
 }
 
+function SocialAndFooterParityBridge() {
+  const location = useLocation();
+
+  useEffect(() => {
+    let cancelled = false;
+    let attempts = 0;
+
+    const apply = () => {
+      const footerSocials = document.querySelector<HTMLElement>('.footer .footer-socials');
+      if (!footerSocials) return false;
+
+      document.querySelectorAll<HTMLAnchorElement>('a.social-instagram').forEach((link) => {
+        link.href = 'https://www.instagram.com/maxtour__vietnam/';
+      });
+
+      let max = footerSocials.querySelector<HTMLAnchorElement>('.social-max');
+      if (!max) {
+        max = document.createElement('a');
+        max.className = 'social-link social-max';
+        max.href = brand.maxMessenger;
+        max.target = '_blank';
+        max.rel = 'noreferrer';
+        max.setAttribute('aria-label', 'MAX');
+        max.innerHTML = '<span class="max-mark">MAX</span>';
+        footerSocials.append(max);
+      }
+      return true;
+    };
+
+    const timer = window.setInterval(() => {
+      attempts += 1;
+      if (cancelled) return;
+      if (apply() || attempts >= 80) window.clearInterval(timer);
+    }, 25);
+
+    return () => {
+      cancelled = true;
+      window.clearInterval(timer);
+    };
+  }, [location.pathname]);
+
+  return null;
+}
+
+function HomeSeoParityBridge() {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname !== '/') return;
+    const timer = window.setTimeout(() => {
+      const meta = document.querySelector<HTMLMetaElement>('meta[name="description"]');
+      if (meta) meta.content = 'Экскурсии в Нячанге';
+    }, 50);
+    return () => window.clearTimeout(timer);
+  }, [location.pathname]);
+
+  return null;
+}
+
 const sourceFaqAnswers = new Map<string, string>([
   ['Нужна ли предоплата?', 'Да, для того чтобы забронировать тур заранее, Вам нужно внести депозит в размере 30-100% от стоимости экскурсии (наличными, картой, переводом в рублях/тенге/долларах и других валютах), оставшуюся сумму нужно будет оплатить в день экскурсии Гиду в донгах.'],
   ['Какие правила отмены и переноса?', 'Перенос тура - бесплатно до 17:00 за день до экскурсии. После этого удерживается 30% от стоимости. Отмена тура: бесплатно более чем за 48 часов до выезда; до 17:00 за день до выезда - удержание 30%; в день выезда или при неявке - удержание 100%. Форс-мажор: тур может быть изменён или отменён из-за природных катастроф, эпидемий и других обстоятельств, не зависящих от компании. В таких случаях возможен возврат средств или перенос тура. Если вы не можете поехать по причине болезни - возврат возможен при предоставлении медицинских документов. Возврат средств - в течение 7 рабочих дней (возможны банковские комиссии). Важно: небольшой дождь не является причиной для отмены тура.'],
@@ -267,6 +326,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
       <HeaderSocialParityBridge />
+      <SocialAndFooterParityBridge />
+      <HomeSeoParityBridge />
       <FaqSourceParityBridge />
       <HomeDesignParityBridge />
       <TourMainSourceBridge />
