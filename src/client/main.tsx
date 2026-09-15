@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, useLocation } from 'react-router-dom';
 import AppV2 from './AppV2';
 import { brand, tours } from './data';
-import { generatedReviews } from './generatedReviews';
 import './styles.css';
 import './tour-pages.css';
 import './source-parity.css';
@@ -11,13 +10,7 @@ import './parity-fixes.css';
 import './source-zero-block.css';
 import './design-parity-v2.css';
 import './mobile-header-source.css';
-
-const escapeHtml = (value: string) => value
-  .replaceAll('&', '&amp;')
-  .replaceAll('<', '&lt;')
-  .replaceAll('>', '&gt;')
-  .replaceAll('"', '&quot;')
-  .replaceAll("'", '&#39;');
+import './homepage-source-contact.css';
 
 function HeaderSocialParityBridge() {
   const location = useLocation();
@@ -91,50 +84,39 @@ function HomeDesignParityBridge() {
     const appendedFaq: HTMLElement[] = [];
 
     const mount = async () => {
-      let popular: HTMLElement | null = null;
       let faq: HTMLElement | null = null;
       for (let attempt = 0; attempt < 40 && !cancelled; attempt += 1) {
-        popular = document.querySelector<HTMLElement>('.popular-section');
         faq = document.querySelector<HTMLElement>('.faq-section');
-        if (popular?.parentElement && faq?.parentElement) break;
+        if (faq?.parentElement) break;
         await new Promise((resolve) => window.setTimeout(resolve, 25));
       }
-      if (cancelled || !popular?.parentElement || !faq?.parentElement) return;
+      if (cancelled || !faq?.parentElement) return;
 
       document.getElementById('source-home-brand-band')?.remove();
       document.getElementById('source-home-reviews')?.remove();
-
-      const band = document.createElement('section');
-      band.id = 'source-home-brand-band';
-      band.className = 'source-home-brand-band';
-      band.innerHTML = '<div class="container source-home-brand-band-inner"><h2>MAX TOUR</h2><a class="button button-primary" href="/katalog-nyachang">ВЫБРАТЬ ТУР</a></div>';
-      popular.parentElement.insertBefore(band, popular);
-      mounted.push(band);
+      document.getElementById('source-home-manager-contact')?.remove();
 
       const faqList = faq.querySelector<HTMLElement>('.faq-list');
       if (faqList && faqList.children.length < 7) {
         const first = document.createElement('details');
         first.className = 'source-home-added-faq';
-        first.innerHTML = '<summary>Как записаться на экскурсию?<span>＋</span></summary><p>Выберите экскурсию на сайте и свяжитесь с менеджером удобным способом для подтверждения даты и бронирования.</p>';
+        first.innerHTML = '<summary>Как записаться на экскурсию?<span>＋</span></summary><p>Оставьте заявку на сайте или свяжитесь с нами через удобный мессенджер. Мы быстро ответим, поможем выбрать экскурсию, подберём удобную дату и подтвердим бронирование.</p>';
         faqList.insertBefore(first, faqList.firstChild);
         appendedFaq.push(first);
 
         const last = document.createElement('details');
         last.className = 'source-home-added-faq';
-        last.innerHTML = '<summary>MAX TOUR — официальная компания?<span>＋</span></summary><p>MAX TOUR работает во Вьетнаме и сопровождает бронирование, оплату и организацию выбранных программ.</p>';
+        last.innerHTML = '<summary>MAX TOUR - официальная компания?<span>＋</span></summary><p>Да, MAX TOUR работает официально и имеет все необходимые разрешения для организации экскурсий. Мы проводим туры по проверенным маршрутам, соблюдаем стандарты безопасности и обеспечиваем страхование для каждого участника.</p>';
         faqList.append(last);
         appendedFaq.push(last);
       }
 
-      const reviews = generatedReviews['dnevnaya-obzornaya-ekskursiya-po-nyachangu'] || [];
-      if (reviews.length) {
-        const section = document.createElement('section');
-        section.id = 'source-home-reviews';
-        section.className = 'section source-home-reviews';
-        section.innerHTML = `<div class="container"><h2 class="live-heading">Отзывы наших туристов</h2><div class="source-home-review-grid">${reviews.slice(0, 4).map((review) => `<article><p>${escapeHtml(review.text)}</p><h3>${escapeHtml(review.name)}</h3><strong>★★★★★</strong></article>`).join('')}</div></div>`;
-        faq.insertAdjacentElement('afterend', section);
-        mounted.push(section);
-      }
+      const contact = document.createElement('section');
+      contact.id = 'source-home-manager-contact';
+      contact.className = 'source-home-manager-contact';
+      contact.innerHTML = `<div class="container"><div class="source-home-manager-contact-inner"><h2>Выберите, где вам удобнее общаться с менеджером</h2><div class="source-home-manager-contact-actions"><a class="messenger-button whatsapp-button" href="${brand.whatsapp}" target="_blank" rel="noreferrer"><span aria-hidden="true">◉</span>WhatsApp</a><a class="messenger-button telegram-button" href="${brand.managerTelegram}" target="_blank" rel="noreferrer"><span aria-hidden="true">➤</span>Telegram</a><a class="messenger-button max-button" href="${brand.maxMessenger}" target="_blank" rel="noreferrer"><span class="max-mark" aria-hidden="true">MAX</span>MAX</a></div></div></div>`;
+      faq.insertAdjacentElement('afterend', contact);
+      mounted.push(contact);
     };
 
     void mount();
