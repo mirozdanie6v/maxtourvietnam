@@ -74,6 +74,20 @@
   box-sizing: border-box;
 }
 
+/* Tilda's global reset removes native paragraph margins inside ZeroBlock atoms.
+   Without this reset, absolute-positioned text shifts vertically and headings
+   overlap neighbouring schedule/location text on desktop. */
+.source-generated-main .tn-atom p,
+.source-generated-main .tn-atom h1,
+.source-generated-main .tn-atom h2,
+.source-generated-main .tn-atom h3,
+.source-generated-main .tn-atom h4,
+.source-generated-main .tn-atom h5,
+.source-generated-main .tn-atom h6 {
+  margin: 0;
+  padding: 0;
+}
+
 .source-generated-main .t396__elem[data-elem-type='text'] .tn-atom {
   display: block;
   white-space: normal;
