@@ -57,16 +57,20 @@
 
 /* Source homepage preview is a compact 2x2 block, not a six-card rail. */
 .catalog-preview .catalog-heading-row > a { display: none; }
-.catalog-preview .catalog-strip {
-  display: grid;
-  grid-auto-flow: row;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-auto-columns: auto;
-  gap: 24px;
-  overflow: visible;
-  padding-bottom: 0;
+body .catalog-preview .tour-strip.catalog-strip {
+  display: grid !important;
+  grid-auto-flow: row !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-auto-columns: unset !important;
+  gap: 24px !important;
+  overflow: visible !important;
+  padding: 0 !important;
 }
-.catalog-preview .catalog-strip .tour-card:nth-child(n+5) { display: none; }
+body .catalog-preview .tour-strip.catalog-strip .tour-card {
+  width: auto !important;
+  min-width: 0 !important;
+}
+.catalog-preview .catalog-strip .tour-card:nth-child(n+5) { display: none !important; }
 .catalog-preview .tour-image-wrap { height: 300px; }
 
 /* Simpler source-like Fast Track: copy + image, without the heavier feature stack. */
@@ -143,40 +147,70 @@
   .catalog-preview .tour-image-wrap { height: 250px; }
 }
 
-@media (max-width: 480px) {
-  /* Source mobile header uses two visual rows and more vertical footprint. */
-  .site-header {
-    height: 112px;
-    padding: 8px 16px 10px;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 54px 40px;
-    align-items: center;
+/* Broaden mobile parity rules to tablet/narrow browser emulation as well. */
+@media (max-width: 767px) {
+  body .site-header {
+    position: sticky !important;
+    height: 112px !important;
+    padding: 8px 16px 10px !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: 54px 40px !important;
+    align-items: center !important;
+    justify-content: stretch !important;
   }
-  .site-header .brand {
-    height: 54px;
-    justify-content: center;
+  body .site-header .brand {
+    grid-row: 1 !important;
+    width: 100% !important;
+    height: 54px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
   }
-  .site-header .brand img {
-    width: 162px;
-    max-height: 50px;
-    object-position: center;
+  body .site-header .brand img {
+    width: 162px !important;
+    max-height: 50px !important;
+    object-position: center !important;
   }
-  .header-actions {
-    width: 100%;
-    justify-content: center;
-    gap: 9px;
+  body .site-header .header-actions {
+    grid-row: 2 !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 9px !important;
+    margin: 0 !important;
   }
-  .header-actions .menu-button {
-    position: absolute;
-    right: 12px;
-    top: 13px;
+  body .site-header .header-actions .menu-button {
+    position: absolute !important;
+    right: 12px !important;
+    top: 13px !important;
+    margin: 0 !important;
   }
-  .header-actions .social-compact {
-    width: 34px;
-    height: 34px;
+  body .site-header .header-actions .social-compact {
+    width: 34px !important;
+    height: 34px !important;
   }
 
+  body .catalog-preview .tour-strip.catalog-strip {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    grid-auto-flow: row !important;
+    grid-auto-columns: unset !important;
+    gap: 18px !important;
+    overflow: visible !important;
+    overflow-x: visible !important;
+    padding: 0 !important;
+    scroll-snap-type: none !important;
+  }
+  body .catalog-preview .tour-strip.catalog-strip .tour-card {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+}
+
+@media (max-width: 480px) {
   .hero-slider {
     height: 545px;
     min-height: 545px;
@@ -201,9 +235,7 @@
     align-items: flex-end;
     gap: 16px;
   }
-  .source-home-brand-band h2 {
-    font-size: clamp(48px, 16vw, 66px);
-  }
+  .source-home-brand-band h2 { font-size: clamp(48px, 16vw, 66px); }
   .source-home-brand-band .button {
     min-width: 126px;
     min-height: 44px;
@@ -217,33 +249,16 @@
     gap: 14px;
   }
   .popular-section .tour-image-wrap { height: 235px; }
-
-  /* The source mobile catalog preview stacks vertically. */
-  .catalog-preview .catalog-strip {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-auto-flow: row;
-    gap: 18px;
-    overflow: visible;
-    padding: 0;
-  }
-  .catalog-preview .catalog-strip .tour-card:nth-child(n+5) { display: none; }
   .catalog-preview .tour-image-wrap { height: 240px; }
 
   .fast-track-section { padding: 58px 0; }
-  .fast-track-grid {
-    grid-template-columns: 1fr;
-    min-height: 0;
-  }
+  .fast-track-grid { grid-template-columns: 1fr; min-height: 0; }
   .fast-track-copy { padding: 0 0 34px; }
   .fast-track-copy h2 { font-size: 54px; }
   .fast-track-image { min-height: 340px; }
 
   .benefits-section { padding: 58px 0; }
-  .benefits-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
+  .benefits-grid { grid-template-columns: 1fr; gap: 12px; }
   .benefit-item {
     display: grid;
     grid-template-columns: 48px 1fr;
@@ -257,16 +272,10 @@
   .benefit-item p { align-self: start; }
 
   .source-home-reviews { padding: 58px 0; }
-  .source-home-review-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
+  .source-home-review-grid { grid-template-columns: 1fr; gap: 12px; }
   .source-home-review-grid article { min-height: 0; padding: 22px 20px; }
 
-  .source-tour-cover-copy {
-    display: grid;
-    bottom: 28px;
-  }
+  .source-tour-cover-copy { display: grid; bottom: 28px; }
   .source-tour-cover-copy p {
     text-align: center;
     font-size: 31px;
