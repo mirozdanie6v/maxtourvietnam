@@ -116,6 +116,35 @@
   color: inherit;
 }
 
+/* Desktop parity fix for the Nha Trang daytime overview ZeroBlock.
+   Tilda stores this record as an absolute 1200 px composition. With our local
+   font runtime the two long headings wrap one line earlier than in the source,
+   increasing their rendered height while the following elements keep their
+   original absolute top coordinates. Keep those headings on one line on the
+   desktop composition; the source 320-responsive rules take over below 1200. */
+@media (min-width: 1200px) {
+  .source-generated-main #rec2343430113 .tn-elem[data-elem-id='1779648746540'] {
+    width: 860px !important;
+  }
+
+  .source-generated-main #rec2343430113 .tn-elem[data-elem-id='1779648746540'] .tn-atom {
+    white-space: nowrap !important;
+    font-size: 38px !important;
+    line-height: 1.08 !important;
+  }
+
+  .source-generated-main #rec2343430113 .tn-elem[data-elem-id='1779649508417000006'] {
+    width: 700px !important;
+    height: 36px !important;
+  }
+
+  .source-generated-main #rec2343430113 .tn-elem[data-elem-id='1779649508417000006'] .tn-atom {
+    white-space: nowrap !important;
+    font-size: 28px !important;
+    line-height: 1.05 !important;
+  }
+}
+
 @media (max-width: 480px) {
   .source-generated-main {
     overflow-x: clip;
