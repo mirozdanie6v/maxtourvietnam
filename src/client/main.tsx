@@ -9,6 +9,7 @@ import './tour-pages.css';
 import './source-parity.css';
 import './parity-fixes.css';
 import './source-zero-block.css';
+import './design-parity-v2.css';
 
 const escapeHtml = (value: string) => value
   .replaceAll('&', '&amp;')
