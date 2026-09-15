@@ -1,0 +1,901 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap');
+
+:root {
+  --source-red: #b4140a;
+  --source-text: #000;
+  --source-content: 1200px;
+}
+
+.source-home-v3 body,
+.source-home-v3 .site-shell {
+  background: #fff;
+  color: var(--source-text);
+  font-family: 'Inter Tight', Arial, sans-serif;
+}
+
+.source-home-v3 h1,
+.source-home-v3 h2,
+.source-home-v3 h3,
+.source-home-v3 .live-heading {
+  font-family: 'Manrope', Arial, sans-serif;
+  letter-spacing: 0;
+}
+
+.source-home-v3 .container {
+  width: min(100% - 40px, 1200px);
+  max-width: 1200px;
+}
+
+/* Header: source is a compact white 1200px Zero Block. */
+.site-header {
+  height: 60px !important;
+  min-height: 60px !important;
+  padding: 5px max(20px, calc((100vw - 1200px) / 2 + 20px)) !important;
+  background: #fff !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.site-header .brand {
+  width: 143px !important;
+  height: 48px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.site-header .brand img {
+  width: 143px !important;
+  max-height: 48px !important;
+  object-fit: contain !important;
+  object-position: left center !important;
+}
+
+.site-header .header-actions {
+  gap: 42px !important;
+  align-items: center !important;
+}
+
+.site-header .social-link.social-compact {
+  width: 30px !important;
+  height: 30px !important;
+  min-width: 30px !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.site-header .social-link.social-compact svg {
+  width: 30px !important;
+  height: 30px !important;
+}
+
+.site-header .social-max .max-mark {
+  font-size: 12px !important;
+}
+
+.site-header .menu-button {
+  width: 53px !important;
+  height: 50px !important;
+  margin-left: 32px !important;
+  padding: 9px 5px !important;
+  border: 0 !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+}
+
+.site-header .menu-button span {
+  width: 43px !important;
+  height: 3px !important;
+  margin: 5px 0 !important;
+  background: #000 !important;
+  border-radius: 0 !important;
+}
+
+.side-menu {
+  width: min(560px, 100vw) !important;
+  padding: 58px 54px 38px !important;
+  background: #fff !important;
+  box-shadow: -8px 0 24px rgba(0,0,0,.12) !important;
+}
+
+.side-menu nav {
+  gap: 0 !important;
+}
+
+.side-menu nav a {
+  padding: 8px 0 !important;
+  font-family: 'Inter Tight', Arial, sans-serif !important;
+  font-size: 22px !important;
+  line-height: 1.18 !important;
+  font-weight: 400 !important;
+  color: #000 !important;
+  border: 0 !important;
+}
+
+/* Source hero: one landscape visual, CTA over it, then the exact source intro text. */
+.source-home-v3 main > .hero-slider {
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  background: #fff !important;
+  overflow: visible !important;
+}
+
+.source-home-v3 .hero-slider > .hero-slide,
+.source-home-v3 .hero-slider > .hero-shade,
+.source-home-v3 .hero-slider > .hero-copy-wrap,
+.source-home-v3 .hero-slider > .hero-dots {
+  display: none !important;
+}
+
+.source-v3-hero {
+  width: min(100%, 1440px);
+  margin: 0 auto;
+  padding: 6px 0 52px;
+  background: #fff;
+}
+
+.source-v3-hero-media {
+  position: relative;
+  width: min(100%, 1440px);
+  overflow: hidden;
+}
+
+.source-v3-hero-media > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 560px;
+  max-height: 858px;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.source-v3-hero-cta {
+  position: absolute;
+  right: max(8%, calc((100% - 1200px) / 2 + 80px));
+  bottom: 18px;
+  width: 300px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--source-red);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 0;
+  font: 600 20px/1 'Inter Tight', Arial, sans-serif;
+  letter-spacing: .02em;
+}
+
+.source-v3-hero-intro {
+  width: min(876px, calc(100% - 40px));
+  margin: 50px auto 0;
+  text-align: center;
+  font: 400 20px/1.1 'Inter Tight', Arial, sans-serif;
+  color: #000;
+}
+
+/* Section headings are 40/44 in the source. */
+.source-home-v3 .live-heading {
+  margin: 0 auto 30px !important;
+  color: #000 !important;
+  text-align: center !important;
+  font-size: 40px !important;
+  line-height: 44px !important;
+  font-weight: 500 !important;
+}
+
+/* Popular excursions: source is a wide image carousel, not product cards. */
+.source-home-v3 .popular-section {
+  padding: 25px 0 34px !important;
+  background: #fff !important;
+}
+
+.source-home-v3 .popular-section .container {
+  width: min(100% - 40px, 1200px) !important;
+}
+
+.source-home-v3 .popular-section .tour-strip {
+  display: none !important;
+}
+
+.source-v3-popular {
+  width: min(1098px, 100%);
+  margin: 0 auto;
+}
+
+.source-v3-popular-viewport {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.source-v3-popular-track {
+  display: flex;
+  width: 100%;
+  transition: transform .45s ease;
+}
+
+.source-v3-popular-slide {
+  flex: 0 0 100%;
+  height: 393px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+}
+
+.source-v3-popular-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.source-v3-gallery-arrow {
+  position: absolute;
+  top: 50%;
+  width: 46px;
+  height: 70px;
+  transform: translateY(-50%);
+  border: 0;
+  background: rgba(255,255,255,.72);
+  color: #777;
+  font: 300 56px/1 Arial, sans-serif;
+  cursor: pointer;
+}
+
+.source-v3-gallery-prev { left: 0; }
+.source-v3-gallery-next { right: 0; }
+
+.source-v3-gallery-dots {
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 14px;
+}
+
+.source-v3-gallery-dots button {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #c5c5c5;
+}
+
+.source-v3-gallery-dots button.active { background: #555; }
+
+/* Coupon: 236px image on the left, 30/33 copy on the right. */
+.source-home-v3 .coupon-section {
+  padding: 22px 0 !important;
+  background: #fff !important;
+  min-height: 280px;
+}
+
+.source-home-v3 .coupon-content {
+  min-height: 236px;
+  display: grid !important;
+  grid-template-columns: 236px minmax(0, 701px) !important;
+  grid-template-rows: 1fr 44px !important;
+  justify-content: center !important;
+  align-items: center !important;
+  column-gap: 52px !important;
+  row-gap: 10px !important;
+  text-align: center !important;
+}
+
+.source-v3-coupon-image {
+  grid-row: 1 / 3;
+  width: 236px;
+  height: 236px;
+  object-fit: contain;
+}
+
+.source-home-v3 .coupon-content > p {
+  margin: 0 !important;
+  max-width: 701px !important;
+  font-family: 'Inter Tight', Arial, sans-serif !important;
+  font-size: 30px !important;
+  line-height: 33px !important;
+  font-weight: 400 !important;
+  color: #000 !important;
+}
+
+.source-home-v3 .coupon-actions {
+  display: flex !important;
+  justify-content: center !important;
+  gap: 0 !important;
+}
+
+.source-v3-manager-button,
+.source-home-v3 .source-fast-track-contact {
+  width: 200px !important;
+  height: 44px !important;
+  min-height: 44px !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 0 !important;
+  border: 0 !important;
+  background: var(--source-red) !important;
+  color: #fff !important;
+  text-decoration: none !important;
+  font: 600 12px/1 'Inter Tight', Arial, sans-serif !important;
+}
+
+/* Catalog preview: fixed 3x2 source grid. */
+.source-home-v3 .catalog-preview {
+  padding: 30px 0 30px !important;
+  background: #fff !important;
+}
+
+.source-home-v3 .catalog-heading-row {
+  display: block !important;
+}
+
+.source-home-v3 .catalog-heading-row > a {
+  display: none !important;
+}
+
+.source-home-v3 .catalog-strip {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 345px)) !important;
+  justify-content: center !important;
+  gap: 32px 28px !important;
+  overflow: visible !important;
+  scroll-snap-type: none !important;
+}
+
+.source-home-v3 .catalog-strip .tour-card {
+  width: 345px !important;
+  min-width: 0 !important;
+  height: 311px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+.source-home-v3 .catalog-strip .tour-image-wrap {
+  width: 343px !important;
+  height: 167px !important;
+  min-height: 167px !important;
+  border-radius: 0 !important;
+  overflow: hidden !important;
+}
+
+.source-home-v3 .catalog-strip .tour-image-wrap img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  border-radius: 0 !important;
+}
+
+.source-home-v3 .catalog-strip .tour-badge {
+  top: 9px !important;
+  right: auto !important;
+  left: 9px !important;
+  min-width: 96px !important;
+  height: 29px !important;
+  padding: 0 11px !important;
+  border-radius: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font: 500 16px/1 'Inter Tight', Arial, sans-serif !important;
+  text-transform: none !important;
+}
+
+.source-home-v3 .catalog-strip .tour-card-body {
+  position: relative !important;
+  flex: 1 !important;
+  min-height: 144px !important;
+  padding: 10px 0 0 !important;
+  display: block !important;
+}
+
+.source-home-v3 .catalog-strip .tour-card h3 {
+  margin: 0 0 5px !important;
+  min-height: 42px !important;
+  font-family: 'Inter Tight', Arial, sans-serif !important;
+  font-size: 17px !important;
+  line-height: 20px !important;
+  font-weight: 500 !important;
+}
+
+.source-home-v3 .catalog-strip .tour-prices {
+  margin: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  font: 400 19px/29px 'Inter Tight', Arial, sans-serif !important;
+}
+
+.source-home-v3 .catalog-strip .tour-prices strong {
+  color: #000 !important;
+  font-weight: 600 !important;
+}
+
+.source-home-v3 .catalog-strip .tour-book {
+  position: absolute !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 133px !important;
+  height: 30px !important;
+  min-height: 30px !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  background: var(--source-red) !important;
+  font: 600 11px/1 'Inter Tight', Arial, sans-serif !important;
+}
+
+.source-v3-catalog-more {
+  width: 200px;
+  height: 55px;
+  margin: 32px auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--source-red);
+  color: #fff;
+  text-decoration: none;
+  font: 600 17px/1 'Inter Tight', Arial, sans-serif;
+}
+
+/* Fast Track: source image left, plain copy right. */
+.source-home-v3 .fast-track-section {
+  padding: 21px 0 26px !important;
+  background: #fff !important;
+}
+
+.source-home-v3 .fast-track-grid {
+  min-height: 313px !important;
+  display: grid !important;
+  grid-template-columns: 313px minmax(0, 1fr) !important;
+  gap: 45px !important;
+  align-items: center !important;
+}
+
+.source-home-v3 .fast-track-image {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  width: 313px !important;
+  height: 313px !important;
+  order: -1 !important;
+}
+
+.source-home-v3 .fast-track-image img {
+  width: 313px !important;
+  height: 313px !important;
+  object-fit: contain !important;
+  border-radius: 0 !important;
+}
+
+.source-home-v3 .fast-track-copy {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  padding: 0 !important;
+}
+
+.source-home-v3 .fast-track-copy > .fast-kicker,
+.source-home-v3 .fast-track-copy > h2,
+.source-home-v3 .fast-track-copy > .fast-features,
+.source-home-v3 .fast-track-copy > .fast-lead,
+.source-home-v3 .fast-track-copy > .button:not(.source-fast-track-contact) {
+  display: none !important;
+}
+
+.source-home-v3 .source-home-fast-track-terms {
+  margin: 0 0 18px !important;
+  color: #000 !important;
+  font: 400 22px/24px 'Inter Tight', Arial, sans-serif !important;
+}
+
+.source-home-v3 .source-home-fast-track-terms p {
+  margin: 0 0 9px !important;
+}
+
+.source-home-v3 .source-home-fast-track-terms ul {
+  margin: 0 0 9px 24px !important;
+  padding: 0 !important;
+}
+
+/* Benefits: real source icons, two-column free layout, no cards. */
+.source-home-v3 .benefits-section {
+  padding: 30px 0 38px !important;
+  background: #fff !important;
+}
+
+.source-home-v3 .benefits-section .live-heading {
+  margin-bottom: 28px !important;
+  font-size: 30px !important;
+  line-height: 36px !important;
+  font-weight: 500 !important;
+}
+
+.source-home-v3 .benefits-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 22px 78px !important;
+  max-width: 1080px !important;
+  margin: 0 auto !important;
+}
+
+.source-home-v3 .benefit-item {
+  min-height: 112px !important;
+  padding: 0 !important;
+  display: grid !important;
+  grid-template-columns: 80px minmax(0, 1fr) !important;
+  gap: 22px !important;
+  align-items: center !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  text-align: left !important;
+}
+
+.source-home-v3 .benefit-item > span {
+  width: 80px !important;
+  height: 80px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: transparent !important;
+  font-size: 0 !important;
+}
+
+.source-home-v3 .benefit-item > span img {
+  width: 80px !important;
+  height: 80px !important;
+  object-fit: contain !important;
+}
+
+.source-home-v3 .benefit-item h3[hidden] { display: none !important; }
+
+.source-home-v3 .benefit-item p {
+  margin: 0 !important;
+  font: 400 20px/25px 'Inter Tight', Arial, sans-serif !important;
+  color: #000 !important;
+}
+
+.source-home-v3 .benefit-item:nth-child(5) {
+  grid-column: 1 / 2;
+}
+
+/* Booking: copy source form proportions, red 2px rounded inputs and messenger actions. */
+.source-home-v3 .booking-section {
+  padding: 30px 0 36px !important;
+  background: #fff !important;
+}
+
+.source-home-v3 .booking-box {
+  max-width: 1114px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.source-home-v3 .booking-box > h2 {
+  margin: 0 0 28px !important;
+  text-align: center !important;
+  font-size: 40px !important;
+  line-height: 62px !important;
+  font-weight: 500 !important;
+}
+
+.source-home-v3 .booking-box form {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 22px 28px !important;
+}
+
+.source-home-v3 .booking-box label {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  font: 400 20px/1.2 'Inter Tight', Arial, sans-serif !important;
+}
+
+.source-home-v3 .booking-box input,
+.source-home-v3 .traveler-stepper {
+  height: 50px !important;
+  min-height: 50px !important;
+  border: 2px solid var(--source-red) !important;
+  border-radius: 24px !important;
+  background: #fff !important;
+  box-shadow: none !important;
+  font: 400 16px/1 'Inter Tight', Arial, sans-serif !important;
+}
+
+.source-home-v3 .booking-box input {
+  padding: 0 20px !important;
+}
+
+.source-home-v3 .input-with-icon b {
+  display: none !important;
+}
+
+.source-home-v3 .traveler-stepper {
+  width: 100% !important;
+  display: grid !important;
+  grid-template-columns: 50px 1fr 50px !important;
+  align-items: center !important;
+  overflow: hidden !important;
+}
+
+.source-home-v3 .traveler-stepper button {
+  height: 46px !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: #000 !important;
+  font-size: 26px !important;
+}
+
+.source-home-v3 .traveler-stepper output {
+  text-align: center !important;
+  font-size: 18px !important;
+}
+
+.source-home-v3 .booking-box .form-submit,
+.source-home-v3 .booking-box .form-success {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.source-home-v3 .booking-messengers {
+  margin: 38px auto 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+  gap: 42px !important;
+}
+
+.source-home-v3 .booking-messengers .messenger-button {
+  width: 240px !important;
+  height: 55px !important;
+  min-height: 55px !important;
+  padding: 0 18px !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  font: 600 13px/1 'Inter Tight', Arial, sans-serif !important;
+}
+
+/* FAQ and footer: flatter source geometry. */
+.source-home-v3 .faq-section {
+  padding: 30px 0 45px !important;
+  background: #fff !important;
+}
+
+.source-home-v3 .faq-container {
+  max-width: 1000px !important;
+}
+
+.source-home-v3 .faq-list details {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.source-home-v3 .source-home-manager-contact {
+  display: none !important;
+}
+
+.footer {
+  background: #fff !important;
+  color: #000 !important;
+  border-top: 0 !important;
+}
+
+.source-home-v3 .footer-main {
+  min-height: 185px !important;
+  padding: 27px 20px 18px !important;
+  display: grid !important;
+  grid-template-columns: 220px 1fr auto !important;
+  grid-template-rows: auto 1fr auto !important;
+  align-items: start !important;
+}
+
+.source-home-v3 .footer-logo {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+}
+
+.source-home-v3 .footer-logo img {
+  width: 180px !important;
+  height: auto !important;
+  max-height: 55px !important;
+  object-fit: contain !important;
+}
+
+.source-home-v3 .footer-socials {
+  grid-column: 3 !important;
+  grid-row: 1 !important;
+  display: flex !important;
+  gap: 14px !important;
+}
+
+.source-home-v3 .footer-socials .social-link {
+  width: 30px !important;
+  height: 30px !important;
+}
+
+.source-home-v3 .footer-contacts {
+  grid-column: 3 !important;
+  grid-row: 2 !important;
+  display: flex !important;
+  gap: 24px !important;
+  align-self: start !important;
+  font: 400 14px/1.3 'Inter Tight', Arial, sans-serif !important;
+}
+
+.source-home-v3 .footer-copy {
+  grid-column: 1 / 4 !important;
+  grid-row: 3 !important;
+  justify-self: center !important;
+  font: 400 14px/1.2 'Inter Tight', Arial, sans-serif !important;
+}
+
+.source-home-v3 .footer-tilda {
+  display: none !important;
+}
+
+@media (max-width: 760px) {
+  .source-home-v3 .container { width: min(100% - 24px, 100%) !important; }
+
+  .site-header {
+    height: 40px !important;
+    min-height: 40px !important;
+    padding: 2px 12px !important;
+  }
+
+  .site-header .brand,
+  .site-header .brand img {
+    width: 86px !important;
+    height: 34px !important;
+  }
+
+  .site-header .header-actions { gap: 14px !important; }
+  .site-header .social-link.social-compact,
+  .site-header .social-link.social-compact svg {
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+  }
+
+  .site-header .menu-button {
+    width: 35px !important;
+    height: 35px !important;
+    margin-left: 4px !important;
+    padding: 6px 2px !important;
+  }
+
+  .site-header .menu-button span {
+    width: 31px !important;
+    height: 2px !important;
+    margin: 4px 0 !important;
+  }
+
+  .side-menu { padding: 45px 26px 30px !important; }
+  .side-menu nav a { font-size: 14px !important; padding: 6px 0 !important; }
+
+  .source-v3-hero { padding: 0 0 30px; }
+  .source-v3-hero-media > img {
+    min-height: 0;
+    height: auto;
+    aspect-ratio: 320 / 190;
+    object-fit: cover;
+  }
+
+  .source-v3-hero-cta {
+    right: 16px;
+    bottom: 12px;
+    width: 132px;
+    height: 36px;
+    font-size: 11px;
+  }
+
+  .source-v3-hero-intro {
+    width: calc(100% - 34px);
+    margin-top: 26px;
+    font-size: 13px;
+    line-height: 15px;
+  }
+
+  .source-home-v3 .live-heading {
+    margin-bottom: 18px !important;
+    font-size: 24px !important;
+    line-height: 28px !important;
+  }
+
+  .source-home-v3 .popular-section { padding: 20px 0 26px !important; }
+  .source-v3-popular-slide { height: auto; aspect-ratio: 2.8 / 1; }
+  .source-v3-gallery-arrow { width: 30px; height: 46px; font-size: 38px; }
+  .source-v3-gallery-dots { gap: 6px; margin-top: 9px; }
+  .source-v3-gallery-dots button { width: 6px; height: 6px; }
+
+  .source-home-v3 .coupon-section { min-height: 0; padding: 18px 0 28px !important; }
+  .source-home-v3 .coupon-content {
+    min-height: 0;
+    grid-template-columns: 110px minmax(0, 1fr) !important;
+    grid-template-rows: auto 34px !important;
+    column-gap: 16px !important;
+    row-gap: 12px !important;
+  }
+  .source-v3-coupon-image { width: 110px; height: 110px; }
+  .source-home-v3 .coupon-content > p { font-size: 15px !important; line-height: 17px !important; }
+  .source-v3-manager-button { width: 160px !important; height: 34px !important; min-height: 34px !important; font-size: 9px !important; }
+
+  .source-home-v3 .catalog-preview { padding: 24px 0 !important; }
+  .source-home-v3 .catalog-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 22px 12px !important;
+  }
+  .source-home-v3 .catalog-strip .tour-card {
+    width: 100% !important;
+    height: 264px !important;
+  }
+  .source-home-v3 .catalog-strip .tour-image-wrap {
+    width: 100% !important;
+    height: 112px !important;
+    min-height: 112px !important;
+  }
+  .source-home-v3 .catalog-strip .tour-card-body { min-height: 150px !important; padding-top: 7px !important; }
+  .source-home-v3 .catalog-strip .tour-card h3 { min-height: 48px !important; font-size: 13px !important; line-height: 16px !important; }
+  .source-home-v3 .catalog-strip .tour-prices { font-size: 13px !important; line-height: 20px !important; }
+  .source-home-v3 .catalog-strip .tour-book { width: 108px !important; height: 28px !important; min-height: 28px !important; font-size: 9px !important; }
+  .source-home-v3 .catalog-strip .tour-badge { min-width: 72px !important; height: 23px !important; font-size: 11px !important; }
+  .source-v3-catalog-more { width: 160px; height: 44px; margin-top: 24px; font-size: 13px; }
+
+  .source-home-v3 .fast-track-grid {
+    grid-template-columns: 120px minmax(0, 1fr) !important;
+    gap: 16px !important;
+    min-height: 0 !important;
+  }
+  .source-home-v3 .fast-track-image,
+  .source-home-v3 .fast-track-image img { width: 120px !important; height: 120px !important; }
+  .source-home-v3 .source-home-fast-track-terms { font-size: 13px !important; line-height: 15px !important; }
+  .source-home-v3 .source-fast-track-contact { width: 160px !important; height: 34px !important; min-height: 34px !important; font-size: 9px !important; }
+
+  .source-home-v3 .benefits-section .live-heading { font-size: 22px !important; line-height: 26px !important; }
+  .source-home-v3 .benefits-grid { grid-template-columns: 1fr !important; gap: 14px !important; }
+  .source-home-v3 .benefit-item { min-height: 78px !important; grid-template-columns: 58px minmax(0, 1fr) !important; gap: 14px !important; }
+  .source-home-v3 .benefit-item > span,
+  .source-home-v3 .benefit-item > span img { width: 58px !important; height: 58px !important; }
+  .source-home-v3 .benefit-item p { font-size: 14px !important; line-height: 17px !important; }
+  .source-home-v3 .benefit-item:nth-child(5) { grid-column: auto; }
+
+  .source-home-v3 .booking-box > h2 { margin-bottom: 18px !important; font-size: 25px !important; line-height: 32px !important; }
+  .source-home-v3 .booking-box form { grid-template-columns: 1fr !important; gap: 14px !important; }
+  .source-home-v3 .booking-box label { font-size: 14px !important; }
+  .source-home-v3 .booking-box input,
+  .source-home-v3 .traveler-stepper { height: 46px !important; min-height: 46px !important; border-radius: 23px !important; font-size: 14px !important; }
+  .source-home-v3 .booking-messengers { margin-top: 26px !important; flex-direction: column !important; align-items: center !important; gap: 12px !important; }
+  .source-home-v3 .booking-messengers .messenger-button { width: 240px !important; height: 48px !important; min-height: 48px !important; }
+
+  .source-home-v3 .faq-section { padding: 24px 0 34px !important; }
+
+  .source-home-v3 .footer-main {
+    min-height: 130px !important;
+    padding: 18px 12px 12px !important;
+    grid-template-columns: 110px 1fr !important;
+    grid-template-rows: auto auto auto !important;
+  }
+  .source-home-v3 .footer-logo img { width: 100px !important; max-height: 35px !important; }
+  .source-home-v3 .footer-socials { grid-column: 2 !important; justify-self: end !important; gap: 8px !important; }
+  .source-home-v3 .footer-socials .social-link { width: 22px !important; height: 22px !important; }
+  .source-home-v3 .footer-contacts { grid-column: 1 / 3 !important; grid-row: 2 !important; justify-self: center !important; gap: 12px !important; font-size: 10px !important; }
+  .source-home-v3 .footer-copy { grid-column: 1 / 3 !important; grid-row: 3 !important; font-size: 10px !important; }
+}
