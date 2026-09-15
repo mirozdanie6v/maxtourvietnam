@@ -1,7 +1,7 @@
 import './homepage-source-v3.css';
 
 const SOURCE = {
-  hero: 'https://static.tildacdn.one/tild3938-3763-4364-a165-666362383464/Max_Tour-3.jpg',
+  hero: 'https://static.tildacdn.one/tild3037-3338-4836-a362-336236666631/Max_Tour-4.jpg',
   coupon: 'https://static.tildacdn.one/tild3864-3563-4137-b935-353938656338/_.png',
   fastTrack: 'https://static.tildacdn.one/tild3065-3462-4338-a336-613465323463/--.png',
   headerLogo: 'https://static.tildacdn.one/tild3138-3137-4031-a331-373835366439/____1680_x_600_-2.svg',
