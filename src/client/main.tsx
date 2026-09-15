@@ -73,6 +73,51 @@ function HeaderSocialParityBridge() {
   return null;
 }
 
+const sourceFaqAnswers = new Map<string, string>([
+  ['Нужна ли предоплата?', 'Да, для того чтобы забронировать тур заранее, Вам нужно внести депозит в размере 30-100% от стоимости экскурсии (наличными, картой, переводом в рублях/тенге/долларах и других валютах), оставшуюся сумму нужно будет оплатить в день экскурсии Гиду в донгах.'],
+  ['Какие правила отмены и переноса?', 'Перенос тура - бесплатно до 17:00 за день до экскурсии. После этого удерживается 30% от стоимости. Отмена тура: бесплатно более чем за 48 часов до выезда; до 17:00 за день до выезда - удержание 30%; в день выезда или при неявке - удержание 100%. Форс-мажор: тур может быть изменён или отменён из-за природных катастроф, эпидемий и других обстоятельств, не зависящих от компании. В таких случаях возможен возврат средств или перенос тура. Если вы не можете поехать по причине болезни - возврат возможен при предоставлении медицинских документов. Возврат средств - в течение 7 рабочих дней (возможны банковские комиссии). Важно: небольшой дождь не является причиной для отмены тура.'],
+  ['Какие способы оплаты доступны?', 'Мы предлагаем несколько удобных способов оплаты: наличными, наш менеджер приедет к вам в отель, примет оплату и выдаст квитанцию; банковской картой; переводом по СБП (Система быстрых платежей) или Каспи; банковским переводом в рублях или тенге; международными переводами. Если у вас есть предпочтительный способ оплаты, свяжитесь с нами - мы подберем наиболее удобный вариант для вас.'],
+  ['А что будет, если группа не наберется?', 'Если Вы внесли депозит, но группа к назначенной дате была не собрана, мы вернем депозит 100% обратно. Обычно при бронировании заранее все группы для выезда собираются полностью без каких либо проблем.'],
+  ['Возможны ли дополнительные расходы?', 'Большинство наших экскурсий уже включает все основные услуги. Дополнительная оплата потребуется только в случае проживания в отдаленных от центра Нячанга районах. Стоимость дополнительного трансфера (за автомобиль): Камрань - 30$ (1-6 чел.) / 50$ (7-14 чел.); Diamond Bay, Amiana, Alibu, Театр DO - 20$ (1-6 чел.) / 30$ (7-14 чел.); Зоклет, GM Resort, Paradise - 60$ (1-6 чел.) / 90$ (7-14 чел.). Если вы не уверены, относится ли ваш отель к этим районам, просто напишите нам, и мы с радостью подскажем.'],
+]);
+
+function FaqSourceParityBridge() {
+  const location = useLocation();
+
+  useEffect(() => {
+    let cancelled = false;
+    let attempts = 0;
+
+    const apply = () => {
+      const faq = document.querySelector<HTMLElement>('.faq-section');
+      if (!faq) return false;
+
+      faq.querySelectorAll<HTMLDetailsElement>('details').forEach((item) => {
+        const summary = item.querySelector<HTMLElement>('summary');
+        const answer = item.querySelector<HTMLParagraphElement>('p');
+        if (!summary || !answer) return;
+        const question = (summary.textContent || '').replace('＋', '').trim();
+        const exact = sourceFaqAnswers.get(question);
+        if (exact) answer.textContent = exact;
+      });
+      return true;
+    };
+
+    const timer = window.setInterval(() => {
+      attempts += 1;
+      if (cancelled) return;
+      if (apply() || attempts >= 80) window.clearInterval(timer);
+    }, 25);
+
+    return () => {
+      cancelled = true;
+      window.clearInterval(timer);
+    };
+  }, [location.pathname]);
+
+  return null;
+}
+
 function HomeDesignParityBridge() {
   const location = useLocation();
 
@@ -95,18 +140,49 @@ function HomeDesignParityBridge() {
       document.getElementById('source-home-brand-band')?.remove();
       document.getElementById('source-home-reviews')?.remove();
       document.getElementById('source-home-manager-contact')?.remove();
+      document.getElementById('source-home-fast-track-terms')?.remove();
+
+      const couponActions = document.querySelector<HTMLElement>('.coupon-section .coupon-actions');
+      if (couponActions) {
+        couponActions.innerHTML = `<a class="button button-primary source-coupon-manager" href="${brand.managerTelegram}" target="_blank" rel="noreferrer">СВЯЗАТЬСЯ С МЕНЕДЖЕРОМ</a>`;
+      }
+
+      const fastTrackCopy = document.querySelector<HTMLElement>('.fast-track-section .fast-track-copy');
+      const fastTrackButton = fastTrackCopy?.querySelector<HTMLAnchorElement>('.button');
+      if (fastTrackCopy && fastTrackButton) {
+        const terms = document.createElement('div');
+        terms.id = 'source-home-fast-track-terms';
+        terms.className = 'source-home-fast-track-terms';
+        terms.innerHTML = '<p><strong>Что входит:</strong></p><ul><li>Встреча с табличкой у зоны таможенного контроля и проход через паспортный контроль без очереди</li><li>Индивидуальный трансфер до отеля в центре Нячанга</li></ul><p>Для 2 человек - 65$ за двоих.</p><p>Для 4 человек - 110$ за четверых.</p>';
+        fastTrackButton.insertAdjacentElement('beforebegin', terms);
+        fastTrackButton.href = brand.managerTelegram;
+        fastTrackButton.textContent = 'СВЯЗАТЬСЯ С МЕНЕДЖЕРОМ';
+        fastTrackButton.classList.add('source-fast-track-contact');
+        mounted.push(terms);
+      }
+
+      const benefitCopy = [
+        'Большой выбор круизов, морских прогулок, катеров и яхт. Подберём идеальный вариант для отдыха, праздника или индивидуального путешествия',
+        'Новые автомобили и комфортабельные автобусы. Забираем из вашего отеля и доставляем обратно после экскурсии',
+        'Честные и доступные цены без скрытых платежей и доплат во время экскурсии',
+        'Небольшие группы позволяют путешествовать комфортно, лучше слышать гида и наслаждаться экскурсией без ощущения массового тура',
+        'Любую экскурсию можем провести в индивидуальном формате, полностью адаптировав её под ваши запросы',
+      ];
+      document.querySelectorAll<HTMLElement>('.benefits-section .benefit-item p').forEach((node, index) => {
+        if (benefitCopy[index]) node.textContent = benefitCopy[index];
+      });
 
       const faqList = faq.querySelector<HTMLElement>('.faq-list');
       if (faqList && faqList.children.length < 7) {
         const first = document.createElement('details');
         first.className = 'source-home-added-faq';
-        first.innerHTML = '<summary>Как записаться на экскурсию?<span>＋</span></summary><p>Оставьте заявку на сайте или свяжитесь с нами через удобный мессенджер. Мы быстро ответим, поможем выбрать экскурсию, подберём удобную дату и подтвердим бронирование.</p>';
+        first.innerHTML = '<summary>Как записаться на экскурсию?<span>＋</span></summary><p>Оставьте заявку на сайте или свяжитесь с нами через удобный мессенджер. Мы быстро ответим, поможем выбрать экскурсию, подберём удобную дату и подтвердим бронирование. Рекомендуем бронировать заранее, особенно в высокий туристический сезон.</p>';
         faqList.insertBefore(first, faqList.firstChild);
         appendedFaq.push(first);
 
         const last = document.createElement('details');
         last.className = 'source-home-added-faq';
-        last.innerHTML = '<summary>MAX TOUR - официальная компания?<span>＋</span></summary><p>Да, MAX TOUR работает официально и имеет все необходимые разрешения для организации экскурсий. Мы проводим туры по проверенным маршрутам, соблюдаем стандарты безопасности и обеспечиваем страхование для каждого участника.</p>';
+        last.innerHTML = '<summary>MAX TOUR - официальная компания?<span>＋</span></summary><p>Да, MAX TOUR работает официально и имеет все необходимые разрешения для организации экскурсий. Мы проводим туры по проверенным маршрутам, соблюдаем стандарты безопасности и обеспечиваем страхование для каждого участника. Ваш комфорт и безопасность - наш главный приоритет.</p>';
         faqList.append(last);
         appendedFaq.push(last);
       }
@@ -191,6 +267,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
       <HeaderSocialParityBridge />
+      <FaqSourceParityBridge />
       <HomeDesignParityBridge />
       <TourMainSourceBridge />
       <AppV2 />

@@ -29,6 +29,35 @@
   min-width: 165px;
 }
 
+/* Source homepage coupon uses a single manager CTA. */
+.source-coupon-manager {
+  min-width: 230px;
+}
+
+/* Source Fast Track copy includes service details and exact package prices. */
+.source-home-fast-track-terms {
+  margin: 20px 0 24px;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.source-home-fast-track-terms p {
+  margin: 0 0 8px;
+}
+
+.source-home-fast-track-terms ul {
+  margin: 0 0 14px;
+  padding-left: 20px;
+}
+
+.source-home-fast-track-terms li + li {
+  margin-top: 6px;
+}
+
+.fast-track-copy .button.source-fast-track-contact::before {
+  content: 'СВЯЗАТЬСЯ С МЕНЕДЖЕРОМ';
+}
+
 @media (max-width: 480px) {
   .source-home-manager-contact {
     padding: 46px 0 58px;
@@ -44,6 +73,11 @@
   }
 
   .source-home-manager-contact .messenger-button {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .source-coupon-manager {
     width: 100%;
     min-width: 0;
   }
