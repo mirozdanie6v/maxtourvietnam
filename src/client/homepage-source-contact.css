@@ -1,0 +1,50 @@
+/* Homepage manager contact block verified against the live source. */
+.source-home-manager-contact {
+  padding: 58px 0 76px;
+  background: #fff;
+  text-align: center;
+}
+
+.source-home-manager-contact-inner {
+  width: min(760px, 100%);
+  margin: 0 auto;
+}
+
+.source-home-manager-contact h2 {
+  margin: 0 0 28px;
+  font-size: clamp(25px, 3vw, 38px);
+  line-height: 1.15;
+  letter-spacing: -.025em;
+}
+
+.source-home-manager-contact-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.source-home-manager-contact .messenger-button {
+  min-width: 165px;
+}
+
+@media (max-width: 480px) {
+  .source-home-manager-contact {
+    padding: 46px 0 58px;
+  }
+
+  .source-home-manager-contact h2 {
+    margin-bottom: 22px;
+    font-size: 27px;
+  }
+
+  .source-home-manager-contact-actions {
+    gap: 10px;
+  }
+
+  .source-home-manager-contact .messenger-button {
+    width: 100%;
+    min-width: 0;
+  }
+}
