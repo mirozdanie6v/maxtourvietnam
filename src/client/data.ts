@@ -18,7 +18,7 @@ const whatsappText = encodeURIComponent('Добрый день! Меня инт�
 
 export const brand = {
   logo: 'https://static.tildacdn.one/tild3138-3137-4031-a331-373835366439/____1680_x_600_-2.svg',
-  brandImage: 'https://static.tildacdn.one/tild3938-3763-4364-a165-666362383464/Max_Tour-3.jpg',
+  brandImage: 'https://static.tildacdn.one/tild3037-3338-4836-a362-336236666631/Max_Tour-4.jpg',
   heroImage: 'https://static.tildacdn.one/tild3037-3338-4836-a362-336236666631/Max_Tour-4.jpg',
   phone: '+84384850407',
   email: 'maxtournhatrang@gmail.com',
@@ -121,72 +121,72 @@ export const tours: Tour[] = [
   },
   {
     slug: 'rybalka-na-ozere-nyachang', title: 'Рыбалка на озере в Нячанге',
-    image: 'https://static.tildacdn.one/tild6666-6332-4139-a238-313334393035/rybalka-na-ozere-nya.png', category: 'Нячанг', adultPrice: 35, childPrice: 25, badge: 'хит лета',
+    image: 'https://static.tildacdn.one/tild6366-6637-4561-b031-313530623763/rybalka-na-ozere-2.png', category: 'Нячанг', adultPrice: 60, childPrice: 40,
     sourceUrl: 'https://maxtourvietnam.com/rybalka-na-ozere-nyachang',
   },
   {
-    slug: 'ostrov-orhidey-i-obezian-nyachang', title: 'Экскурсия на Остров Орхидей и Остров Обезьян',
-    image: 'https://static.tildacdn.one/tild3434-6534-4637-a137-383063623031/ostrov-orhidey-i-obe.png', category: 'Нячанг', adultPrice: 36, childPrice: 28, badge: 'хит лета',
-    sourceUrl: 'https://maxtourvietnam.com/ostrov-orhidey-i-obezian-nyachang',
+    slug: 'ostrov-orhidey-i-ostrov-obezyan-nyachang', title: 'Остров Орхидей и Остров Обезьян в Нячанге',
+    image: 'https://static.tildacdn.one/tild6339-3862-4230-a266-343630333034/26.png', category: 'Нячанг', adultPrice: 45, childPrice: 30,
+    sourceUrl: 'https://maxtourvietnam.com/ostrov-orhidey-i-ostrov-obezyan-nyachang',
   },
   {
-    slug: 'morskaya-rybalka-nyachang', title: 'Морская рыбалка в Нячанге на приватном катере',
-    image: 'https://static.tildacdn.one/tild6566-6533-4266-a531-333961333866/morskaya-rybalka-.png', category: 'Премиум', adultPrice: 300, badge: 'эксклюзив',
+    slug: 'morskaya-rybalka-nyachang', title: 'Морская рыбалка в Нячанге',
+    image: 'https://static.tildacdn.one/tild6536-6133-4161-a134-376663323632/25.png', category: 'Нячанг', adultPrice: 75, childPrice: 50,
     sourceUrl: 'https://maxtourvietnam.com/morskaya-rybalka-nyachang',
   },
   {
     slug: 'kruiz-marmoris-nyachang', title: 'Круиз Marmoris в Нячанге',
-    image: 'https://static.tildacdn.one/tild3633-3061-4139-b231-643531363761/14D42C84-0A6F-461C-9.jpg', category: 'Премиум', adultPrice: 98, childPrice: 79, badge: 'новинка',
+    image: 'https://static.tildacdn.one/tild6130-3632-4234-a138-333130303761/marmoris-2.png', category: 'Премиум', adultPrice: 180, badge: 'супер',
     sourceUrl: 'https://maxtourvietnam.com/kruiz-marmoris-nyachang',
   },
   {
-    slug: 'kruiz-emperor-nyachang', title: 'Круиз Emperor в Нячанге',
-    image: 'https://static.tildacdn.one/tild6362-3431-4932-b761-626631336564/kruiz-emperor-6.png', category: 'Премиум', adultPrice: 90, childPrice: 67, badge: 'хит лета',
-    sourceUrl: 'https://maxtourvietnam.com/kruiz-emperor-nyachang',
+    slug: 'kruiz-imperator-nyachang', title: 'Круиз Император в Нячанге',
+    image: 'https://static.tildacdn.one/tild3635-3864-4165-b835-373361373637/2.png', category: 'Премиум', adultPrice: 95, badge: 'супер',
+    sourceUrl: 'https://maxtourvietnam.com/kruiz-imperator-nyachang',
   },
   {
     slug: 'kruiz-na-katamarane-nyachang', title: 'Круиз на катамаране в Нячанге',
-    image: 'https://static.tildacdn.one/tild3635-3132-4639-b934-376331643765/0BAD15B0-60EF-4433-9.jpg', category: 'Премиум', adultPrice: 75, childPrice: 55, badge: 'эксклюзив',
+    image: 'https://static.tildacdn.one/tild6232-3065-4232-b230-333061323961/29.png', category: 'Премиум', adultPrice: 120, badge: 'супер',
     sourceUrl: 'https://maxtourvietnam.com/kruiz-na-katamarane-nyachang',
   },
   {
-    slug: 'zipline-i-verevochnyj-park-v-nyachange', title: 'Экскурсия Зиплайн и веревочный парк в Нячанге',
-    image: 'https://static.tildacdn.net/tild3938-3237-4737-b234-343333626633/extrim-22.png', category: 'Нячанг', adultPrice: 58, childPrice: 40, badge: 'хит лета',
-    sourceUrl: 'https://maxtourvietnam.com/zipline-i-verevochnyj-park-v-nyachange',
+    slug: 'zipline-nyachang', title: 'Зиплайн в Нячанге',
+    image: 'https://static.tildacdn.one/tild6165-3065-4236-a435-363434393831/15.png', category: 'Нячанг', adultPrice: 42, badge: 'новинка',
+    sourceUrl: 'https://maxtourvietnam.com/zipline-nyachang',
   },
   {
-    slug: 'kvadrocikly-v-nyachange', title: 'Квадроциклы в Нячанге',
-    image: 'https://static.tildacdn.net/tild3363-3932-4763-a337-333230623937/extrim-21.png', category: 'Нячанг', adultPrice: 64, childPrice: 45, badge: 'хит лета',
-    sourceUrl: 'https://maxtourvietnam.com/kvadrocikly-v-nyachange',
+    slug: 'kvadrocikly-nyachang', title: 'Квадроциклы в Нячанге',
+    image: 'https://static.tildacdn.one/tild6433-6565-4538-b864-323636623036/10.png', category: 'Нячанг', adultPrice: 60, badge: 'новинка',
+    sourceUrl: 'https://maxtourvietnam.com/kvadrocikly-nyachang',
   },
   {
-    slug: 'dayving-i-snorkling-v-nyachange', title: 'Дайвинг и Снорклинг в Нячанге',
-    image: 'https://static.tildacdn.one/tild6239-6432-4331-a533-633333326634/extrim-1.png', category: 'Нячанг', adultPrice: 90, childPrice: 45, badge: 'хит лета',
-    sourceUrl: 'https://maxtourvietnam.com/dayving-i-snorkling-v-nyachange',
+    slug: 'dayving-i-snorkling-nyachang', title: 'Дайвинг и снорклинг в Нячанге',
+    image: 'https://static.tildacdn.one/tild3562-3862-4635-a534-386365313533/8.png', category: 'Нячанг', adultPrice: 65,
+    sourceUrl: 'https://maxtourvietnam.com/dayving-i-snorkling-nyachang',
   },
   {
     slug: 'ekskursiya-v-daklak-iz-nyachanga', title: 'Экскурсия в Даклак из Нячанга',
-    image: 'https://static.tildacdn.one/tild6234-3865-4263-a230-343463326331/7.png', category: 'Другие города', adultPrice: 1000, badge: 'эксклюзив',
+    image: 'https://static.tildacdn.one/tild3334-3032-4939-a133-623138373765/daklak-2.png', category: 'Другие города', adultPrice: 1000,
     sourceUrl: 'https://maxtourvietnam.com/ekskursiya-v-daklak-iz-nyachanga',
   },
   {
-    slug: 'termalnye-istochniki-yang-bay-iz-nyachanga', title: 'Экскурсия в Термальные источники Янг Бэй',
-    image: 'https://static.tildacdn.one/tild3162-3537-4034-b165-373239396436/30.png', category: 'Нячанг', adultPrice: 34, childPrice: 24, badge: 'хит лета',
-    sourceUrl: 'https://maxtourvietnam.com/termalnye-istochniki-yang-bay-iz-nyachanga',
+    slug: 'yang-bay-waterfall-nyachang', title: 'Экскурсия на водопад Янг Бэй из Нячанга',
+    image: 'https://static.tildacdn.one/tild6430-3734-4664-b664-643532636331/yang-bay-2.png', category: 'Нячанг', adultPrice: 45, childPrice: 35,
+    sourceUrl: 'https://maxtourvietnam.com/yang-bay-waterfall-nyachang',
   },
   {
-    slug: 'dzip-tur-v-nyachange', title: 'Джип-тур в Нячанге',
-    image: 'https://static.tildacdn.one/tild6635-3366-4362-b039-613562343330/17.png', category: 'Нячанг', adultPrice: 90, childPrice: 65, badge: 'новинка',
-    sourceUrl: 'https://maxtourvietnam.com/dzip-tur-v-nyachange',
+    slug: 'jeep-tour-nyachang', title: 'Джип тур в Нячанге',
+    image: 'https://static.tildacdn.one/tild3638-3733-4238-b234-666461333134/jeep-tour-2.png', category: 'Нячанг', adultPrice: 150,
+    sourceUrl: 'https://maxtourvietnam.com/jeep-tour-nyachang',
   },
   {
-    slug: 'ekskursiya-baho-zoklet-iz-nyachanga', title: 'Экскурсия на водопад Бахо и пляж Зоклет из Нячанга',
-    image: 'https://static.tildacdn.one/tild6362-3037-4265-b638-323665613039/29.png', category: 'Нячанг', adultPrice: 36, childPrice: 26, badge: 'хит лета',
-    sourceUrl: 'https://maxtourvietnam.com/ekskursiya-baho-zoklet-iz-nyachanga',
+    slug: 'baho-waterfall-zoklet-beach-nyachang', title: 'Экскурсия на водопад Бахо и пляж Зоклет из Нячанга',
+    image: 'https://static.tildacdn.one/tild6536-6133-4161-a134-376663323632/25.png', category: 'Нячанг', adultPrice: 50, childPrice: 35,
+    sourceUrl: 'https://maxtourvietnam.com/baho-waterfall-zoklet-beach-nyachang',
   },
 ];
 
-export const sidebarLinks = [
+export const sidebarLinks: Array<[string, string]> = [
   ['Главная', '/'],
   ['Экскурсии Дананга', '/page-not-found'],
   ['Блог', '/page-not-found'],
@@ -196,4 +196,4 @@ export const sidebarLinks = [
   ['Экскурсии Ханоя', '/page-not-found'],
   ['Премиум экскурсии', '/premium-ekskursii-vetnam'],
   ['Экскурсии Нячанга', '/katalog-nyachang'],
-] as const;
+];
