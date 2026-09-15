@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, useLocation } from 'react-router-dom';
 import AppV2 from './AppV2';
-import { tours } from './data';
+import { brand, tours } from './data';
 import { generatedReviews } from './generatedReviews';
 import './styles.css';
 import './tour-pages.css';
@@ -18,6 +18,67 @@ const escapeHtml = (value: string) => value
   .replaceAll('>', '&gt;')
   .replaceAll('"', '&quot;')
   .replaceAll("'", '&#39;');
+
+function HeaderSocialParityBridge() {
+  const location = useLocation();
+
+  useEffect(() => {
+    let cancelled = false;
+    let observer: MutationObserver | null = null;
+    let attempts = 0;
+
+    const apply = () => {
+      const actions = document.querySelector<HTMLElement>('.site-header .header-actions');
+      if (!actions) return false;
+
+      const whatsapp = actions.querySelector<HTMLAnchorElement>('.social-whatsapp');
+      const telegram = actions.querySelector<HTMLAnchorElement>('.social-telegram');
+      const instagram = actions.querySelector<HTMLAnchorElement>('.social-instagram');
+      const menu = actions.querySelector<HTMLElement>('.menu-button');
+      let max = actions.querySelector<HTMLAnchorElement>('.social-max');
+
+      if (!max && instagram) {
+        instagram.classList.remove('social-instagram');
+        instagram.classList.add('social-max');
+        instagram.href = brand.maxMessenger;
+        instagram.setAttribute('aria-label', 'MAX');
+        instagram.innerHTML = '<span class="max-mark">MAX</span>';
+        max = instagram;
+      }
+
+      if (!max || !telegram || !whatsapp) return false;
+
+      const desired = [max, telegram, whatsapp, menu].filter(Boolean) as HTMLElement[];
+      desired.forEach((node, index) => {
+        if (actions.children[index] !== node) actions.insertBefore(node, actions.children[index] || null);
+      });
+      return true;
+    };
+
+    const timer = window.setInterval(() => {
+      attempts += 1;
+      if (cancelled) return;
+      if (apply() || attempts >= 80) {
+        window.clearInterval(timer);
+        const actions = document.querySelector<HTMLElement>('.site-header .header-actions');
+        if (actions) {
+          observer = new MutationObserver(() => {
+            if (!cancelled) apply();
+          });
+          observer.observe(actions, { childList: true, subtree: true });
+        }
+      }
+    }, 25);
+
+    return () => {
+      cancelled = true;
+      window.clearInterval(timer);
+      observer?.disconnect();
+    };
+  }, [location.pathname]);
+
+  return null;
+}
 
 function HomeDesignParityBridge() {
   const location = useLocation();
@@ -147,6 +208,7 @@ function TourMainSourceBridge() {
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
+      <HeaderSocialParityBridge />
       <HomeDesignParityBridge />
       <TourMainSourceBridge />
       <AppV2 />
