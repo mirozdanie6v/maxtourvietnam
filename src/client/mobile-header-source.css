@@ -1,0 +1,65 @@
+/* Final mobile header geometry verified against the live source at ~390px. */
+@media (max-width: 767px) {
+  body .site-header {
+    position: sticky !important;
+    height: 80px !important;
+    min-height: 80px !important;
+    padding: 0 14px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+  }
+
+  body .site-header .brand {
+    width: auto !important;
+    height: 62px !important;
+    min-width: 0 !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    flex: 0 1 auto !important;
+  }
+
+  body .site-header .brand img {
+    width: min(150px, 40vw) !important;
+    max-height: 56px !important;
+    object-position: left center !important;
+  }
+
+  body .site-header .header-actions {
+    width: auto !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+    gap: 7px !important;
+    margin: 0 !important;
+    flex: 0 0 auto !important;
+  }
+
+  body .site-header .header-actions .social-compact {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  body .site-header .header-actions .social-compact svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  body .site-header .header-actions .menu-button {
+    position: static !important;
+    right: auto !important;
+    top: auto !important;
+    width: 38px !important;
+    height: 42px !important;
+    margin: 0 0 0 2px !important;
+    padding: 8px 2px !important;
+  }
+
+  body .site-header .header-actions .menu-button span {
+    width: 30px !important;
+  }
+}
