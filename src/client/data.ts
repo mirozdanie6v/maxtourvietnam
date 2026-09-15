@@ -31,7 +31,7 @@ export const brand = {
 };
 
 export const heroSlides = [
-  'https://static.tildacdn.one/tild3037-3338-4836-a362-336236666631/Max_Tour-4.jpg',
+  'https://static.tildacdn.one/tild3938-3763-4364-a165-666362383464/Max_Tour-3.jpg',
   'https://static.tildacdn.one/tild6364-3464-4566-a261-623638643137/2.png',
   'https://static.tildacdn.one/tild6362-3037-4265-b638-323665613039/29.png',
   'https://static.tildacdn.one/tild6164-3530-4135-a237-303861393436/26.png',
